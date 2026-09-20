@@ -454,8 +454,8 @@ body.petals-on .petals{display:block}
 
   /* ---- "Add your contact info" opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
   document.getElementById('open-details').addEventListener('click', function(){
-    try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#rsvp'; return; } } catch (err) {}
-    window.location.href = 'index.html#rsvp';
+    try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#contact'; return; } } catch (err) {}
+    window.location.href = 'index.html#contact';
   });
 })();
 </script>
