@@ -17,7 +17,7 @@
 
 :root{
   --blush:#FAE8EC; --cream:#F5EBD8; --paper:#FFFBF5; --grape:#543555; --grape-soft:rgba(84,53,85,.74); --marigold:#C9700F;
-  --moss:#5E6B36; --line:rgba(84,53,85,.22); --btn:#C0660B; --btn-ink:#FFFBF5; --side-w:clamp(180px,16vw,220px);
+  --rose:#CFA9A5; --plum:#3B2140; --moss:#5E6B36; --line:rgba(84,53,85,.22); --btn:#C0660B; --btn-ink:#FFFBF5; --side-w:clamp(180px,16vw,220px);
   --kael:"Kaelyna Script","Billa Mount","Snell Roundhand",cursive;
   --billa:"Billa Mount","Kaelyna Script","Snell Roundhand",cursive;
   --ivy:"Ivy Mode","Tenor Sans","Optima",Georgia,sans-serif;
@@ -39,24 +39,24 @@ a{color:inherit}
 .btn:hover{background:var(--paper);color:var(--btn)}
 
 /* ---------- site nav ---------- */
-.nav{position:fixed;top:0;right:0;bottom:0;z-index:60;width:var(--side-w);display:flex;align-items:center;justify-content:center;background:#fff;border-left:1px solid rgba(201,112,15,.55);box-shadow:-1px 0 0 var(--paper),-18px 0 44px -22px rgba(30,14,32,.4);
+.nav{position:fixed;top:0;right:0;bottom:0;z-index:60;width:var(--side-w);display:flex;align-items:center;justify-content:center;background:var(--rose);border-left:1px solid rgba(255,251,245,.75);box-shadow:-18px 0 44px -22px rgba(30,14,32,.45);
   transform:translateX(calc(100% + 60px));visibility:hidden;transition:transform .85s cubic-bezier(.22,.8,.24,1),visibility 0s .85s}
-.nav::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,112,15,.35);pointer-events:none}
+.nav::before{content:"";position:absolute;inset:8px;border:1px solid rgba(255,251,245,.6);pointer-events:none}
 .nav.open{transform:none;visibility:visible;transition-delay:0s,0s}
 .tabs{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(26px,9svh,72px);padding:0 16px;text-align:center}
-.tabs a{font-family:var(--ivy);font-size:14px;line-height:1.5;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;text-decoration:none;padding-block:6px;border-bottom:2px solid transparent;color:var(--grape);
+.tabs a{font-family:var(--ivy);font-size:14px;line-height:1.5;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;text-decoration:none;padding-block:6px;border-bottom:2px solid transparent;color:var(--plum);
   opacity:0;transform:translateX(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,.8,.24,1),color .2s}
 .nav.open .tabs a{opacity:1;transform:none;transition-delay:.3s,.3s,0s}
 .nav.open .tabs a:nth-child(2){transition-delay:.4s,.4s,0s}
 .nav.open .tabs a:nth-child(3){transition-delay:.5s,.5s,0s}
 .nav.open .tabs a:nth-child(4){transition-delay:.6s,.6s,0s}
-.tabs a:hover{color:var(--marigold)}
-.tabs a[aria-current="page"]{border-bottom-color:var(--marigold);color:var(--marigold)}
+.tabs a:hover{border-bottom-color:rgba(59,33,64,.4)}
+.tabs a[aria-current="page"]{border-bottom-color:var(--plum)}
 .scrim{position:fixed;inset:0;z-index:55;background:rgba(30,14,32,.28);opacity:0;pointer-events:none;transition:opacity .6s}
 .scrim.open{opacity:1;pointer-events:auto}
 /* menu button: white round bubble with three lines, on every page; it turns into an X while the sidebar is open */
-.menu-btn{position:fixed;top:clamp(12px,2vw,22px);right:clamp(12px,2vw,22px);z-index:70;width:48px;height:48px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:#fff;color:var(--grape);cursor:pointer;box-shadow:0 4px 16px -4px rgba(30,14,32,.45)}
-.menu-btn:hover{color:var(--marigold)}
+.menu-btn{position:fixed;top:clamp(12px,2vw,22px);right:clamp(12px,2vw,22px);z-index:70;width:48px;height:48px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:var(--rose);color:var(--plum);cursor:pointer;box-shadow:0 0 0 2px var(--paper),0 4px 16px -4px rgba(30,14,32,.45)}
+.menu-btn:hover{color:#2A142C}
 .menu-btn i,.menu-btn i::before,.menu-btn i::after{display:block;width:20px;height:2px;border-radius:1px;background:currentColor;transition:transform .3s,background .3s}
 .menu-btn i{position:relative}
 .menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0}
