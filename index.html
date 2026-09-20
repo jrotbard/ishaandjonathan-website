@@ -68,7 +68,7 @@ a{color:inherit}
 
 /* ---------- pages ---------- */
 .page{display:none}
-body[data-page="home"] #p-home,body[data-page="save-the-date"] #p-save-the-date,body[data-page="rsvp"] #p-rsvp,body[data-page="schedule"] #p-schedule,body[data-page="travel"] #p-travel,body[data-page="faqs"] #p-faqs{display:block}
+body[data-page="home"] #p-home,body[data-page="save-the-date"] #p-save-the-date,body[data-page="contact"] #p-contact,body[data-page="schedule"] #p-schedule,body[data-page="travel"] #p-travel,body[data-page="faqs"] #p-faqs{display:block}
 
 /* paper: every message in the site sits on a sheet of paper over the block print */
 .paper{position:relative;width:100%;max-width:640px;margin-inline:auto;background:var(--paper);border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 24px 44px -24px rgba(60,40,50,.55);text-align:center;padding:clamp(30px,6vw,56px) clamp(20px,5vw,48px)}
@@ -111,6 +111,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
 @media (max-width:480px){ .addr-grid{grid-template-columns:1fr 1fr} .addr-grid .city{grid-column:1 / -1} }
 .submit{justify-self:start;padding:16px 28px;padding-inline:calc(28px + .26em) 28px;border:0;background:var(--btn);color:var(--btn-ink);font-family:var(--ivy);font-size:13px;letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
 .form-note{margin:0;font-size:12px;color:var(--grape-soft)}
+.plusone-note{font-size:14px;font-style:italic}
 .thanks{max-width:520px;margin:0 auto;padding:22px;border:1px solid var(--line);background:#fff}
 .thanks .l-title{font-size:48px;margin:0}
 .reach{margin:34px 0 0;color:var(--grape-soft)}
@@ -148,7 +149,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     <a href="#save-the-date" data-tab="save-the-date">Save the Date</a>
     <a href="#schedule" data-tab="schedule">Schedule</a>
     <a href="#travel" data-tab="travel">Travel</a>
-    <a href="#rsvp" data-tab="rsvp">RSVP</a>
+    <a href="#contact" data-tab="contact">Contact Information</a>
     <a href="#faqs" data-tab="faqs">FAQs</a>
   </nav>
 </header>
@@ -168,17 +169,22 @@ input::placeholder{color:rgba(84,53,85,.45)}
     <iframe id="std-frame" title="Save the date" allow="autoplay" src="about:blank"></iframe>
   </section>
 
-  <!-- RSVP -->
-  <section class="page" id="p-rsvp" aria-label="RSVP">
+  <!-- CONTACT INFORMATION -->
+  <section class="page" id="p-contact" aria-label="Contact information">
     <div class="wrap">
       <article class="paper">
-        <span class="label">RSVP</span>
+        <span class="label">Contact Information</span>
         <h2 class="l-title">Where should we send your invitation?</h2>
         <p class="lead">Share your contact details and your formal invitation will find its way to you.</p>
         <form id="rsvp-form">
           <div class="field">
             <label class="label" for="rsvp-name">Name</label>
             <input type="text" id="rsvp-name" name="name" placeholder="Your name(s)" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label class="label" for="rsvp-plusone">Plus One</label>
+            <input type="text" id="rsvp-plusone" name="plusone" placeholder="Plus one's name" autocomplete="off">
+            <p class="form-note plusone-note">Please only bring those ones that are invited</p>
           </div>
           <fieldset class="field">
             <legend class="label">Mailing address</legend>
@@ -230,8 +236,8 @@ input::placeholder{color:rgba(84,53,85,.45)}
 (function(){
   var html = document.documentElement, body = document.body;
   var nav = document.getElementById('nav'), frame = document.getElementById('std-frame');
-  var PAGES = ['home', 'save-the-date', 'schedule', 'travel', 'rsvp', 'faqs'];
-  var TITLES = {home: 'Isha & Jonathan', 'save-the-date': 'Save the Date | Isha & Jonathan', schedule: 'Schedule | Isha & Jonathan', travel: 'Travel | Isha & Jonathan', rsvp: 'RSVP | Isha & Jonathan', faqs: 'FAQs | Isha & Jonathan'};
+  var PAGES = ['home', 'save-the-date', 'schedule', 'travel', 'contact', 'faqs'];
+  var TITLES = {home: 'Isha & Jonathan', 'save-the-date': 'Save the Date | Isha & Jonathan', schedule: 'Schedule | Isha & Jonathan', travel: 'Travel | Isha & Jonathan', contact: 'Contact Information | Isha & Jonathan', faqs: 'FAQs | Isha & Jonathan'};
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   /* sidebar: opened and closed by the round menu button on every page; choosing a tab, clicking outside it or pressing Escape also closes it */
@@ -242,7 +248,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
   }
   function route(){
     var h = (location.hash || '#home').slice(1);
-    if (h === 'contact') h = 'rsvp';  /* old link */
+    if (h === 'rsvp') h = 'contact';  /* old link */
     if (PAGES.indexOf(h) < 0) h = 'home';
     body.dataset.page = h;
     document.title = TITLES[h];
