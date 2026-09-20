@@ -2,12 +2,13 @@
 """Builds the website into public/ from the templates in src/.
 
   python3 build.py                          rebuild everything, keeping the current passwords
-  python3 build.py --both "pw1" --one "pw2" change the passwords, then rebuild
+  python3 build.py --both "pw1" --one "pw2" --may "pw3"   change the passwords, then rebuild
 
 public/index.html is the password page. Each password opens its own hidden folder, named after a
 hash of the password, so neither the passwords nor the folder names appear in any published file:
   --both  -> the July 9 & 10 version
   --one   -> the July 10 only version
+  --may   -> the May 14 version (same as July 10 only, with May 14, 2027 as the date)
 Only the hashed folder names are stored (slugs.json). The passwords themselves are never written
 to disk. Passwords are not case sensitive and ignore spaces at the ends.
 
@@ -19,7 +20,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 SRC, PUB, SLUGS = ROOT / 'src', ROOT / 'public', ROOT / 'slugs.json'
 SALT = 'ishaandjonathan|'          # must match SALT in src/gate.html
-VERSIONS = {'both': 'July 9 & 10', 'one': 'July 10 only'}
+VERSIONS = {'both': 'July 9 & 10', 'one': 'July 10 only', 'may': 'May 14'}
 NOINDEX = '<meta name="robots" content="noindex, nofollow">\n'
 MARKER = '<meta name="invite-site" content="1">\n'   # the password page looks for this to confirm a folder is real
 ASSET = re.compile(r'(?<![\w/.\-])(img|fonts|audio|cal)/(?=[\w.\-])')   # shared assets live one level up from a version folder
@@ -38,18 +39,19 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument('--both', help='password for the July 9 & 10 version')
     ap.add_argument('--one', help='password for the July 10 only version')
+    ap.add_argument('--may', help='password for the May 14 version')
     a = ap.parse_args()
 
     slugs = json.loads(SLUGS.read_text()) if SLUGS.exists() else {}
-    for key, pw in (('both', a.both), ('one', a.one)):
+    for key, pw in (('both', a.both), ('one', a.one), ('may', a.may)):
         if pw is not None:
             if not pw.strip():
                 sys.exit('empty password for --%s' % key)
             slugs[key] = slug(pw)
     if set(slugs) != set(VERSIONS):
-        sys.exit('no passwords yet: run  python3 build.py --both "..." --one "..."')
-    if slugs['both'] == slugs['one']:
-        sys.exit('the two passwords must be different')
+        sys.exit('missing passwords: run  python3 build.py --both "..." --one "..." --may "..."')
+    if len(set(slugs.values())) != len(slugs):
+        sys.exit('the passwords must all be different')
     SLUGS.write_text(json.dumps(slugs, indent=2) + '\n')
 
     for d in PUB.iterdir():                        # clear old generated version folders

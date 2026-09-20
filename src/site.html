@@ -34,7 +34,7 @@ a{color:inherit}
 ::selection{background:var(--grape);color:var(--blush)}
 :focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
 [data-version="both"] .v-one{display:none !important}
-[data-version="one"] .v-both{display:none !important}
+[data-version="one"] .v-both,[data-version="may"] .v-both{display:none !important}
 .label{font-family:var(--ivy);font-size:12px;letter-spacing:.2em;padding-left:.2em;text-transform:uppercase;color:var(--marigold)}
 .amp{font-family:var(--billa);color:var(--marigold)}
 .btn{display:inline-block;padding:16px 28px;padding-inline:calc(28px + .2em) 28px;border:1px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-family:var(--ivy);font-size:13px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .2s,color .2s}
@@ -272,7 +272,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
   window.addEventListener('keydown', function(e){ if (e.key === 'Escape') setOpen(false); });
   window.addEventListener('hashchange', route);
 
-  /* guest version (both days or July 10 only) is baked into <body data-version> when the site is built; see build.py */
+  /* guest version (both days, July 10 only, or May 14) is baked into <body data-version> when the site is built; see build.py */
 
   /* ---- contact form: each submission becomes one row in the "Contact Form Responses" tab of the Isha & Jonathan Google Sheet,
           through a small Google Apps Script web app (see CLAUDE.md). Paste that web app's URL below. ---- */
@@ -290,7 +290,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     formError.hidden = true;
     var name = form.elements.name.value.trim();
     if (!FORM_ENDPOINT){ showThanks(name); return; }        /* preview mode until the endpoint is set */
-    var data = {version: body.dataset.version === 'one' ? 'July 10 only' : 'Both days'};
+    var data = {version: {one: 'July 10 only', may: 'May 14'}[body.dataset.version] || 'Both days'};
     ['name', 'plusone', 'street', 'city', 'state', 'zip', 'phone', 'plusone_phone', 'email', 'plusone_email', 'website'].forEach(function(k){
       var v = form.elements[k] ? form.elements[k].value.trim() : '';
       data[k] = v.charAt(0) === '=' ? "'" + v : v;          /* a leading "=" would be stored as a spreadsheet formula; the apostrophe keeps it plain text */

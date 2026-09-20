@@ -32,7 +32,8 @@ button{font:inherit;color:inherit}
 ::selection{background:var(--grape);color:var(--blush)}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
 [data-version="both"] .v-one{display:none !important}
-[data-version="one"] .v-both{display:none !important}
+[data-version="one"] .v-both,[data-version="may"] .v-both{display:none !important}
+[data-version="both"] .v-may,[data-version="one"] .v-may,[data-version="may"] .v-one{display:none !important}
 .label{font-family:var(--caps);font-size:12px;font-weight:400;letter-spacing:.2em;padding-left:.2em;text-transform:uppercase;color:var(--marigold)}
 .amp{font-family:var(--didone);font-style:italic;color:var(--marigold)}
 
@@ -247,7 +248,7 @@ body.petals-on .petals{display:block}
       <span class="label meet">Meet us at</span>
       <p class="place">Skylands Manor</p>
       <span class="label town">Ringwood, New Jersey</span>
-      <p class="on"><span class="v-both">July 9 <span class="amp">&amp;</span> 10, 2027</span><span class="v-one">July 10, 2027</span></p>
+      <p class="on"><span class="v-both">July 9 <span class="amp">&amp;</span> 10, 2027</span><span class="v-one">July 10, 2027</span><span class="v-may">May 14, 2027</span></p>
       <span class="formal">Formal invitation to follow</span>
       <figure class="venue"><img src="../img/skylands-venue.webp" alt="The stone entrance of Skylands Manor with ivy-covered towers" width="960" height="640" loading="lazy"></figure>
       <button type="button" class="cue" id="cue"><span class="label">Scroll</span><i aria-hidden="true">&darr;</i></button>
@@ -408,12 +409,17 @@ body.petals-on .petals{display:block}
   });
 
   /* ---- countdown to midnight Eastern on the guest's first day ---- */
-  var targets = {both: Date.UTC(2027, 6, 9, 4, 0, 0), one: Date.UTC(2027, 6, 10, 4, 0, 0)};
+  /* per version: countdown target (midnight Eastern, UTC-4 in summer), Google Calendar dates, Apple Calendar file */
+  var VERSIONS = {
+    both: {target: Date.UTC(2027, 6, 9, 4, 0, 0),  gcal: '20270709/20270711', ics: '../cal/isha-jonathan-wedding.ics'},
+    one:  {target: Date.UTC(2027, 6, 10, 4, 0, 0), gcal: '20270710/20270711', ics: '../cal/isha-jonathan-wedding-july10.ics'},
+    may:  {target: Date.UTC(2027, 4, 14, 4, 0, 0), gcal: '20270514/20270515', ics: '../cal/isha-jonathan-wedding-may14.ics'}
+  };
   var version = 'both';
   var el = {d: document.getElementById('cd-days'), h: document.getElementById('cd-hours'), m: document.getElementById('cd-mins'), s: document.getElementById('cd-secs')};
   function pad(n){ return n < 10 ? '0' + n : String(n); }
   function tick(){
-    var s = Math.floor(Math.max(0, targets[version] - Date.now()) / 1000);
+    var s = Math.floor(Math.max(0, VERSIONS[version].target - Date.now()) / 1000);
     el.d.textContent = Math.floor(s / 86400);
     el.h.textContent = pad(Math.floor(s % 86400 / 3600));
     el.m.textContent = pad(Math.floor(s % 3600 / 60));
@@ -421,9 +427,9 @@ body.petals-on .petals{display:block}
   }
   tick(); setInterval(tick, 1000);
 
-  /* ---- guest version (both days or July 10 only), from <body data-version> ---- */
+  /* ---- guest version (both days, July 10 only, or May 14), from <body data-version> ---- */
   function calHref(v){
-    var dates = v === 'both' ? '20270709/20270711' : '20270710/20270711';
+    var dates = VERSIONS[v].gcal;
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent("Isha & Jonathan's Wedding") +
       '&dates=' + dates + '&location=' + encodeURIComponent('Skylands Manor, Ringwood, New Jersey') + '&details=' + encodeURIComponent('Save the date! Formal invitation to follow.');
   }
@@ -431,10 +437,10 @@ body.petals-on .petals{display:block}
     version = v;
     body.dataset.version = v;
     document.getElementById('cal-google').href = calHref(v);
-    document.getElementById('cal-apple').href = v === 'both' ? '../cal/isha-jonathan-wedding.ics' : '../cal/isha-jonathan-wedding-july10.ics';
+    document.getElementById('cal-apple').href = VERSIONS[v].ics;
     tick();
   }
-  setVersion(body.dataset.version === 'one' ? 'one' : 'both');   /* baked into <body data-version> when the site is built; see build.py */
+  setVersion(VERSIONS[body.dataset.version] ? body.dataset.version : 'both');   /* baked into <body data-version> when the site is built; see build.py */
 
   /* ---- Apple Calendar: the .ics file is served by the live site; if it is missing (preview), say so instead of failing silently ---- */
   document.getElementById('cal-apple').addEventListener('click', function(e){
