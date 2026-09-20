@@ -67,16 +67,16 @@ main::after{inset:8px;border:1.5px solid #D9892A;border-image:linear-gradient(13
 /* what rises out of the envelope: the framed photo of us, and the card behind it */
 .pocket{position:absolute;inset:0;z-index:2;pointer-events:none}
 .letter,.frame{position:absolute;opacity:0;transition:transform 1.8s cubic-bezier(.2,.8,.2,1),opacity .3s}
-.letter{left:29cqw;width:64cqw;top:-50cqw;height:84cqw;z-index:1;--r:2.2deg;background:#FFFBF5 url(img/card-texture.svg) 0 0/34cqw 42.5cqw;box-shadow:0 1px 2px rgba(0,0,0,.08),0 16px 30px -14px rgba(60,40,50,.5);
-  padding:9cqw 3cqw 0 19cqw;text-align:center;color:var(--grape);transform-origin:50% 100%;transform:translateY(44cqw) rotate(var(--r));transition-delay:.9s}
+.letter{left:31cqw;width:53cqw;top:-54cqw;height:84cqw;z-index:1;--r:2.2deg;background:#FFFBF5 url(img/card-texture.svg) 0 0/34cqw 42.5cqw;box-shadow:0 1px 2px rgba(0,0,0,.08),0 16px 30px -14px rgba(60,40,50,.5);
+  padding:6cqw 2.5cqw 0 10cqw;text-align:center;color:var(--grape);transform-origin:50% 100%;transform:translateY(44cqw) rotate(var(--r));transition-delay:.9s}
 .letter::before{content:"";position:absolute;inset:-6.5cqw;border:6.5cqw solid transparent;border-image:url(img/lace-border.svg) 60 round;pointer-events:none;z-index:-1}
-.letter .hello{display:block;font-family:var(--script);font-size:6.6cqw;line-height:1.12;color:var(--marigold)}
-.letter .n{display:block;font-family:var(--script);font-size:10.2cqw;line-height:1.06;margin-top:2.2cqw}
+.letter .hello{display:block;font-family:var(--script);font-size:7cqw;line-height:1.12;color:var(--marigold)}
+.letter .n{display:block;font-family:var(--script);font-size:9.6cqw;line-height:1;margin-top:1.4cqw}
 .letter .n2{margin-top:-.4cqw}
-.letter .amp{display:block;font-family:var(--didone);font-style:italic;font-size:6cqw;line-height:1;color:var(--marigold);margin-top:.8cqw}
-.frame{left:2cqw;width:46cqw;aspect-ratio:100 / 125;top:-46cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
+.letter .amp{display:block;font-family:var(--didone);font-style:italic;font-size:5.6cqw;line-height:1;color:var(--marigold);margin-top:.8cqw}
+.frame{left:0cqw;width:46cqw;aspect-ratio:100 / 125;top:-46cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
 .frame .ph{position:absolute;left:12.6%;top:9.1%;width:74.8%;height:77.8%;border-radius:50%;object-fit:cover;object-position:50% 22%;background:var(--blush-deep)}
-.frame .ring{position:absolute;left:-12.3%;top:-9.6%;width:114%;height:109.6%;pointer-events:none}
+.frame .ring{position:absolute;left:-12.3%;top:-9.6%;width:114%;height:112.8%;pointer-events:none}
 .stage:not([data-state="closed"]) .letter,.stage:not([data-state="closed"]) .frame{opacity:1;transform:translateY(0) rotate(var(--r))}
 /* date on a heart, and the wax seal, on the envelope front */
 .heart{position:absolute;left:50%;opacity:0;transition:opacity .9s ease 2.3s,transform 1.1s cubic-bezier(.2,.8,.2,1) 2.3s}
@@ -98,6 +98,9 @@ body.opening .after{opacity:1;visibility:visible;transform:none;transition:opaci
 .after .town{font-size:clamp(11px,3vw,14px);color:var(--grape)}
 .after .on{margin-top:12px;font-family:var(--didone);font-size:clamp(17px,4.6vw,26px);letter-spacing:.04em}
 .after .on .amp{font-size:.8em}
+.after .venue{--lb:clamp(20px,5.2vw,30px);position:relative;isolation:isolate;margin:calc(20px + var(--lb)) auto calc(6px + var(--lb));width:min(calc(100% - 2 * var(--lb) - 8px),410px);padding:7px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 24px -14px rgba(60,40,50,.5)}
+.after .venue::before{content:"";position:absolute;inset:calc(-1 * var(--lb));border:var(--lb) solid transparent;border-image:url(img/lace-border.svg) 60 round;pointer-events:none;z-index:-1}
+.after .venue img{display:block;width:100%;height:auto;aspect-ratio:3 / 2;object-fit:cover;object-position:50% 50%}
 .after .formal{margin-top:12px;font-family:var(--text);font-style:italic;font-size:clamp(14px,3.8vw,18px);color:var(--marigold)}
 .cue{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;cursor:pointer;color:var(--grape)}
 .cue i{font-style:normal;font-size:18px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
@@ -116,7 +119,8 @@ body.opening .after{opacity:1;visibility:visible;transform:none;transition:opaci
 .unit .label{font-size:clamp(8px,2.2vw,10px);letter-spacing:.2em;padding-left:.2em}
 .cd-date{margin:26px 0 0;font-style:italic}
 .follow{margin:30px auto 0;max-width:36ch;color:var(--grape-soft)}
-.details-btn{margin-top:34px;padding:18px 30px;padding-inline:calc(30px + .26em) 30px;border:1px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-family:var(--caps);font-size:13px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .2s,color .2s}
+.details-btn{display:block;width:min(100%,520px);margin:38px auto 0;padding:26px 24px;padding-inline:calc(24px + .2em) 24px;border:2px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-family:var(--caps);font-size:clamp(15px,4.2vw,20px);font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 26px -12px rgba(150,80,10,.65),inset 0 0 0 4px rgba(255,251,245,.28);transition:background .2s,color .2s,transform .2s;animation:btnpulse 2.6s ease-in-out infinite}
+@keyframes btnpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
 .details-btn:hover{background:transparent;color:var(--btn)}
 
 /* ---------- closing ---------- */
@@ -245,7 +249,7 @@ body.petals-on .petals{display:block}
             </div>
             <div class="frame">
               <img class="ph" src="img/us.webp" alt="Isha and Jonathan smiling together by the sea" width="900" height="1125">
-              <img class="ring" src="img/frame-oval.svg" alt="" width="114" height="137">
+              <img class="ring" src="img/frame-oval.svg" alt="" width="114" height="141">
             </div>
             <div class="heart" aria-label="July 2027"><span>July<small>2027</small></span></div>
           </div>
@@ -261,6 +265,7 @@ body.petals-on .petals{display:block}
       <span class="label town">Ringwood, New Jersey</span>
       <p class="on"><span class="v-both">July 9 <span class="amp">&amp;</span> 10, 2027</span><span class="v-one">July 10, 2027</span></p>
       <span class="formal">Formal invitation to follow</span>
+      <figure class="venue"><img src="img/skylands-venue.webp" alt="The stone entrance of Skylands Manor with ivy-covered towers" width="960" height="640" loading="lazy"></figure>
       <button type="button" class="cue" id="cue"><span class="label">Scroll</span><i aria-hidden="true">&darr;</i></button>
     </div>
 
@@ -283,7 +288,6 @@ body.petals-on .petals{display:block}
   <!-- Closing -->
   <section class="closing" aria-labelledby="closing-title">
     <div class="closing-inner">
-      <span class="label">With love</span>
       <div class="monogram" aria-hidden="true"><span class="mono"><span class="m-i">I</span><span class="m-amp">&amp;</span><span class="m-j">J</span></span></div>
       <h2 id="closing-title">We can't wait to celebrate with you!</h2>
       <span class="label cal-title">Add to your calendar</span>
