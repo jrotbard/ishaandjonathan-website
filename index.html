@@ -292,7 +292,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
 
   /* ---- contact form: each submission becomes one row in the "Contact Form Responses" tab of the Isha & Jonathan Google Sheet,
           through a small Google Apps Script web app (see CLAUDE.md). Paste that web app's URL below. ---- */
-  var FORM_ENDPOINT = '';
+  var FORM_ENDPOINT = 'https://script.google.com/macros/s/AKfycbz9E4i3IMQa5WUAarPl91MjwRv21J3Pm8rd_PwzCGgXkm-EpGxwp-bIQ430piA1Jlzp/exec';
   var form = document.getElementById('rsvp-form');
   var sendBtn = document.getElementById('rsvp-send'), formError = document.getElementById('form-error');
   if (FORM_ENDPOINT) document.getElementById('form-note').hidden = true;
@@ -308,7 +308,8 @@ input::placeholder{color:rgba(84,53,85,.45)}
     if (!FORM_ENDPOINT){ showThanks(name); return; }        /* preview mode until the endpoint is set */
     var data = {version: body.dataset.version === 'one' ? 'July 10 only' : 'Both days'};
     ['name', 'plusone', 'street', 'city', 'state', 'zip', 'phone', 'plusone_phone', 'email', 'plusone_email', 'website'].forEach(function(k){
-      data[k] = form.elements[k] ? form.elements[k].value.trim() : '';
+      var v = form.elements[k] ? form.elements[k].value.trim() : '';
+      data[k] = v.charAt(0) === '=' ? ' ' + v : v;          /* a leading "=" would be stored as a spreadsheet formula */
     });
     sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
     var ctl = ('AbortController' in window) ? new AbortController() : null;
