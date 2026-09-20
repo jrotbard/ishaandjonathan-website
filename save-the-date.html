@@ -19,12 +19,13 @@
   --text:"Libre Baskerville","Baskerville",Georgia,serif;
 }
 *{box-sizing:border-box}
-html{background:var(--cream)}
+/* the block print is painted on html, not body: body's box drops by main's top margin when scroll unlocks (body stops being a block formatting context), which used to drag the pattern down ~18px */
+html{background:var(--cream) url(img/blockprint-peony.svg) 0 0/280px 355px}
 /* no visible scrollbar on this page: when scrolling unlocks at the end of the envelope animation, a classic scrollbar used to appear and shove the centered page ~7px sideways. The page still scrolls normally (wheel, trackpad, touch, keys). */
 html{scrollbar-width:none}
 html::-webkit-scrollbar,body::-webkit-scrollbar{display:none}
 html.locked,html.locked body{overflow:hidden}
-body{margin:0;background:var(--cream) url(img/blockprint-peony.svg) 0 0/280px 355px;color:var(--grape);font-family:var(--text);font-size:15px;line-height:1.7;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
+body{margin:0;color:var(--grape);font-family:var(--text);font-size:15px;line-height:1.7;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased}
 button{font:inherit;color:inherit}
 ::selection{background:var(--grape);color:var(--blush)}
 button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
