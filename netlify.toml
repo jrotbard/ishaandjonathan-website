@@ -1,0 +1,8 @@
+# Netlify: publish the generated site folder as is (no build step; run build.py and commit the result).
+[build]
+  publish = "public"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta name="robots" content="noindex, nofollow">
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Isha &amp; Jonathan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap">
+<style>
+/* Same look as the Contact Information form: paper card on the peony block print. */
+@font-face{font-family:"Kaelyna Script";src:url(fonts/KaelynaScript.woff) format("woff");font-display:swap;
+  unicode-range:U+0041-005A,U+0061-007A,U+0027,U+2019,U+002C,U+002E}
+@font-face{font-family:"Billa Mount";src:url(fonts/BillaMount.woff) format("woff");font-display:swap}
+:root{
+  --blush:#FAE8EC; --cream:#F5EBD8; --paper:#FFFBF5; --grape:#543555; --grape-soft:rgba(84,53,85,.74); --marigold:#C9700F;
+  --btn:#C0660B; --btn-ink:#FFFBF5; --err:#8A2F45;
+  --kael:"Kaelyna Script","Billa Mount","Snell Roundhand",cursive;
+  --ivy:"Ivy Mode","Tenor Sans","Optima",Georgia,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--cream)}
+body{margin:0;min-height:100svh;color:var(--grape);font-family:var(--ivy);font-size:15px;line-height:1.7;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;
+  background:var(--cream) url(img/blockprint-peony.svg) 0 0/280px 355px}
+button,input{font:inherit;color:inherit}
+::selection{background:var(--grape);color:var(--blush)}
+:focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
+.label{font-family:var(--ivy);font-size:12px;letter-spacing:.2em;padding-left:.2em;text-transform:uppercase;color:var(--marigold)}
+.wrap{min-height:100svh;display:grid;place-items:center;padding:clamp(28px,6vw,64px) clamp(16px,4vw,32px)}
+.paper{position:relative;width:100%;max-width:640px;margin-inline:auto;background:var(--paper);border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 24px 44px -24px rgba(60,40,50,.55);text-align:center;padding:clamp(30px,6vw,56px) clamp(20px,5vw,48px)}
+.paper::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,112,15,.35);pointer-events:none}
+.l-title{margin:10px 0 18px;font-family:var(--kael);font-weight:400;font-size:clamp(46px,10vw,72px);line-height:1.3}
+.lead{margin:0 auto 22px;color:var(--grape-soft);max-width:46ch}
+form{display:grid;gap:20px;max-width:520px;margin-inline:auto;text-align:left}
+.field{display:grid;gap:7px;min-width:0}
+input[type="password"],input[type="text"]{width:100%;font-size:16px;color:var(--grape);background:#fff;border:1px solid rgba(84,53,85,.3);border-radius:0;padding:12px 14px;-webkit-appearance:none;appearance:none}
+.submit{justify-self:start;padding:16px 28px;padding-inline:calc(28px + .26em) 28px;border:0;background:var(--btn);color:var(--btn-ink);font-family:var(--ivy);font-size:13px;letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
+.submit[disabled]{opacity:.6;cursor:progress}
+.error{margin:0;min-height:1.7em;font-size:14px;font-style:italic;color:var(--err)}
+</style>
+</head>
+<body>
+<main class="wrap">
+  <article class="paper">
+    <span class="label">Isha &amp; Jonathan</span>
+    <h1 class="l-title">Welcome</h1>
+    <p class="lead">Enter your password to continue.</p>
+    <form id="gate" autocomplete="off" novalidate>
+      <div class="field">
+        <label class="label" for="pw">Password</label>
+        <input type="password" id="pw" name="password" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" required autofocus>
+      </div>
+      <p class="error" id="err" role="alert" aria-live="polite"></p>
+      <button type="submit" class="submit" id="go">Enter</button>
+    </form>
+  </article>
+</main>
+<script>
+(function(){
+  /* Each password maps to a hidden folder named after its hash (see build.py), so this page never contains the passwords or the folder names. */
+  var SALT = 'ishaandjonathan|';
+  var form = document.getElementById('gate'), pw = document.getElementById('pw'), err = document.getElementById('err'), go = document.getElementById('go');
+
+  function sha256Fallback(str){   /* used only where crypto.subtle is unavailable (plain http, e.g. a local preview) */
+    var K = [0x428a2f98,0x71374491,0xb5c0fbcf,0xe9b5dba5,0x3956c25b,0x59f111f1,0x923f82a4,0xab1c5ed5,0xd807aa98,0x12835b01,0x243185be,0x550c7dc3,0x72be5d74,0x80deb1fe,0x9bdc06a7,0xc19bf174,0xe49b69c1,0xefbe4786,0x0fc19dc6,0x240ca1cc,0x2de92c6f,0x4a7484aa,0x5cb0a9dc,0x76f988da,0x983e5152,0xa831c66d,0xb00327c8,0xbf597fc7,0xc6e00bf3,0xd5a79147,0x06ca6351,0x14292967,0x27b70a85,0x2e1b2138,0x4d2c6dfc,0x53380d13,0x650a7354,0x766a0abb,0x81c2c92e,0x92722c85,0xa2bfe8a1,0xa81a664b,0xc24b8b70,0xc76c51a3,0xd192e819,0xd6990624,0xf40e3585,0x106aa070,0x19a4c116,0x1e376c08,0x2748774c,0x34b0bcb5,0x391c0cb3,0x4ed8aa4a,0x5b9cca4f,0x682e6ff3,0x748f82ee,0x78a5636f,0x84c87814,0x8cc70208,0x90befffa,0xa4506ceb,0xbef9a3f7,0xc67178f2];
+    var H = [0x6a09e667,0xbb67ae85,0x3c6ef372,0xa54ff53a,0x510e527f,0x9b05688c,0x1f83d9ab,0x5be0cd19];
+    var bytes = unescape(encodeURIComponent(str)), n = bytes.length, i, j, w = new Array(64);
+    var words = [];
+    for (i = 0; i < n; i++) words[i >> 2] |= bytes.charCodeAt(i) << (24 - (i % 4) * 8);
+    words[n >> 2] |= 0x80 << (24 - (n % 4) * 8);
+    words[(((n + 8) >> 6) << 4) + 15] = n * 8;
+    function rr(x, c){ return (x >>> c) | (x << (32 - c)); }
+    for (i = 0; i < words.length; i += 16){
+      var a = H[0], b = H[1], c = H[2], d = H[3], e = H[4], f = H[5], g = H[6], h = H[7];
+      for (j = 0; j < 64; j++){
+        if (j < 16) w[j] = words[i + j] | 0;
+        else { var s0 = rr(w[j-15],7) ^ rr(w[j-15],18) ^ (w[j-15] >>> 3), s1 = rr(w[j-2],17) ^ rr(w[j-2],19) ^ (w[j-2] >>> 10); w[j] = (w[j-16] + s0 + w[j-7] + s1) | 0; }
+        var S1 = rr(e,6) ^ rr(e,11) ^ rr(e,25), ch = (e & f) ^ (~e & g), t1 = (h + S1 + ch + K[j] + w[j]) | 0;
+        var S0 = rr(a,2) ^ rr(a,13) ^ rr(a,22), mj = (a & b) ^ (a & c) ^ (b & c), t2 = (S0 + mj) | 0;
+        h = g; g = f; f = e; e = (d + t1) | 0; d = c; c = b; b = a; a = (t1 + t2) | 0;
+      }
+      H[0] = (H[0] + a) | 0; H[1] = (H[1] + b) | 0; H[2] = (H[2] + c) | 0; H[3] = (H[3] + d) | 0; H[4] = (H[4] + e) | 0; H[5] = (H[5] + f) | 0; H[6] = (H[6] + g) | 0; H[7] = (H[7] + h) | 0;
+    }
+    return H.map(function(x){ return ('00000000' + (x >>> 0).toString(16)).slice(-8); }).join('');
+  }
+  function sha256Hex(str){
+    if (window.crypto && crypto.subtle && window.TextEncoder){
+      return crypto.subtle.digest('SHA-256', new TextEncoder().encode(str)).then(function(buf){
+        return Array.prototype.map.call(new Uint8Array(buf), function(b){ return ('0' + b.toString(16)).slice(-2); }).join('');
+      });
+    }
+    return Promise.resolve(sha256Fallback(str));
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var typed = pw.value.trim().toLowerCase();
+    err.textContent = '';
+    if (!typed){ err.textContent = 'Please enter your password.'; pw.focus(); return; }
+    go.disabled = true;
+    sha256Hex(SALT + typed).then(function(hex){
+      var slug = hex.slice(0, 16);
+      return fetch(slug + '/index.html', {cache: 'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
+        if (t.indexOf('name="invite-site"') < 0) throw 0;
+        window.location.assign(slug + '/');
+      });
+    }).catch(function(){
+      go.disabled = false;
+      err.textContent = "That password isn't right. Please try again.";
+      pw.select();
+    });
+  });
+})();
+</script>
+</body>
+</html>
