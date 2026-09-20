@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <!-- Tenor Sans is the stand-in for Ivy Mode until the licensed Ivy Mode files are dropped into fonts/ (see @font-face below) -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@1,6..96,400&family=Pinyon+Script&family=Tenor+Sans&display=swap">
 <style>
 /* Three typefaces only: Kaelyna Script (headlines), Billa Mount (accent script, numerals, ampersand), Ivy Mode (all small text). */
 @font-face{font-family:"Kaelyna Script";src:url(fonts/KaelynaScript.woff) format("woff");font-display:swap;
@@ -21,6 +21,8 @@
   --kael:"Kaelyna Script","Billa Mount","Snell Roundhand",cursive;
   --billa:"Billa Mount","Kaelyna Script","Snell Roundhand",cursive;
   --ivy:"Ivy Mode","Tenor Sans","Optima",Georgia,sans-serif;
+  --pinyon:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;   /* same script as the names on the Save the Date page */
+  --didone:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
 }
 *{box-sizing:border-box}
 html{background:var(--cream)}
@@ -86,10 +88,11 @@ body:is([data-page="schedule"],[data-page="travel"],[data-page="faqs"]) .site-fo
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top right,rgba(30,14,32,.3) 0%,rgba(30,14,32,0) 55%)}
 .hero-names{position:absolute;z-index:1;left:clamp(20px,5vw,72px);bottom:calc(max(23.5vw,31.5svh) + 24px);  /* sits just above the couple, whose heads are ~31% up from the bottom of the (bottom-anchored, cover-fit) 3072x2294 photo */
   margin:0;max-width:calc(100% - 40px);
-  font-family:var(--ivy);font-weight:400;text-transform:uppercase;font-size:clamp(28px,4.8vw,80px);line-height:1.08;letter-spacing:.06em;color:var(--paper);
+  font-family:var(--pinyon);font-weight:400;font-size:clamp(50px,8vw,128px);line-height:1.15;color:var(--paper);
   text-shadow:0 2px 24px rgba(30,14,32,.45)}
 .hero-names span{display:block}
-@media (max-width:640px){ .hero-names{font-size:9vw} }
+.hero-amp{font-family:var(--didone);font-style:italic;font-size:.6em}
+@media (max-width:640px){ .hero-names{font-size:16vw} }
 
 body[data-page="home"] .site-foot{display:none}
 
@@ -164,7 +167,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     <!-- cover photo: img/cover.webp (Real-ESRGAN 4x upscale of the original 1026x766 photo) -->
     <div class="hero" id="hero">
       <figure class="hero-photo"><img src="img/cover.webp" alt="Isha and Jonathan on a stone lookout above a bay, with the ocean and a green headland behind them" width="3072" height="2294"></figure>
-      <h1 class="hero-names"><span>Isha</span><span>&amp; Jonathan</span></h1>
+      <h1 class="hero-names"><span>Isha</span><span><i class="hero-amp">&amp;</i> Jonathan</span></h1>
     </div>
   </section>
 
