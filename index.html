@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Isha &amp; Jonathan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Tenor Sans is the stand-in for Ivy Mode until the licensed Ivy Mode files are dropped into fonts/ (see @font-face below) -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tenor+Sans&display=swap">
+<style>
+/* Three typefaces only: Kaelyna Script (headlines), Billa Mount (accent script, numerals, ampersand), Ivy Mode (all small text). */
+@font-face{font-family:"Kaelyna Script";src:url(fonts/KaelynaScript.woff) format("woff");font-display:swap;
+  unicode-range:U+0041-005A,U+0061-007A,U+0027,U+2019,U+002C,U+002E}  /* letters only; digits and & come from Billa Mount */
+@font-face{font-family:"Billa Mount";src:url(fonts/BillaMount.woff) format("woff");font-display:swap}
+@font-face{font-family:"Ivy Mode";src:local("Ivy Mode"),local("IvyMode"),local("IvyMode-Regular"),url(fonts/IvyMode-Regular.woff2) format("woff2");font-display:swap}
+
+:root{
+  --blush:#FAE8EC; --cream:#F5EBD8; --paper:#FFFBF5; --grape:#543555; --grape-soft:rgba(84,53,85,.74); --marigold:#C9700F;
+  --moss:#5E6B36; --line:rgba(84,53,85,.22); --btn:#C0660B; --btn-ink:#FFFBF5; --side-w:clamp(230px,21vw,290px);
+  --kael:"Kaelyna Script","Billa Mount","Snell Roundhand",cursive;
+  --billa:"Billa Mount","Kaelyna Script","Snell Roundhand",cursive;
+  --ivy:"Ivy Mode","Tenor Sans","Optima",Georgia,sans-serif;
+}
+*{box-sizing:border-box}
+html{background:var(--cream)}
+html.locked,html.locked body{overflow:hidden}
+body{margin:0;color:var(--grape);font-family:var(--ivy);font-size:15px;line-height:1.7;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;
+  background:var(--cream) url(img/blockprint-damask.svg) 0 0/256px 320px}
+button,input,select,textarea{font:inherit;color:inherit}
+a{color:inherit}
+::selection{background:var(--grape);color:var(--blush)}
+:focus-visible{outline:2px solid var(--marigold);outline-offset:3px}
+[data-version="both"] .v-one{display:none !important}
+[data-version="one"] .v-both{display:none !important}
+.label{font-family:var(--ivy);font-size:12px;letter-spacing:.2em;padding-left:.2em;text-transform:uppercase;color:var(--marigold)}
+.amp{font-family:var(--billa);color:var(--marigold)}
+.btn{display:inline-block;padding:16px 28px;padding-inline:calc(28px + .2em) 28px;border:1px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-family:var(--ivy);font-size:13px;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:background .2s,color .2s}
+.btn:hover{background:var(--paper);color:var(--btn)}
+
+/* ---------- site nav ---------- */
+.nav{position:fixed;top:0;right:0;bottom:0;z-index:60;width:var(--side-w);display:flex;align-items:center;justify-content:center;background:#fff;border-left:1px solid rgba(201,112,15,.55);box-shadow:-1px 0 0 var(--paper),-18px 0 44px -22px rgba(30,14,32,.4);
+  transform:translateX(calc(100% + 60px));transition:transform .85s cubic-bezier(.22,.8,.24,1)}
+.nav::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,112,15,.35);pointer-events:none}
+.nav.open{transform:none}
+.tabs{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:clamp(30px,10svh,84px);padding:0 22px;text-align:center}
+.tabs a{font-family:var(--ivy);font-size:clamp(16px,1.45vw,19px);line-height:1.45;letter-spacing:.16em;padding-left:.16em;text-transform:uppercase;text-decoration:none;padding-block:6px;border-bottom:2px solid transparent;color:var(--grape);
+  opacity:0;transform:translateX(18px);transition:opacity .7s ease,transform .7s cubic-bezier(.22,.8,.24,1),color .2s}
+.nav.open .tabs a{opacity:1;transform:none;transition-delay:.3s,.3s,0s}
+.nav.open .tabs a:nth-child(2){transition-delay:.4s,.4s,0s}
+.nav.open .tabs a:nth-child(3){transition-delay:.5s,.5s,0s}
+.nav.open .tabs a:nth-child(4){transition-delay:.6s,.6s,0s}
+.tabs a:hover{color:var(--marigold)}
+.tabs a[aria-current="page"]{border-bottom-color:var(--marigold);color:var(--marigold)}
+.menu-btn{display:none}
+/* wide screens: the sidebar stays on every tab except Home, where it slides out on the first click; content makes room for it */
+@media (min-width:861px){
+  body:not([data-page="home"]) main,body:not([data-page="home"]) .site-foot{margin-right:var(--side-w)}
+}
+/* narrow screens: the sidebar becomes a drawer with a menu button on the inner tabs */
+@media (max-width:860px){
+  :root{--side-w:min(68vw,280px)}
+  .tabs a{font-size:16px}
+  .menu-btn{position:fixed;top:12px;right:12px;z-index:70;width:46px;height:46px;padding:0;border:1px solid rgba(201,112,15,.6);border-radius:50%;background:#fff;color:var(--grape);cursor:pointer;box-shadow:0 6px 18px -8px rgba(30,14,32,.5);
+    place-items:center}
+  body:not([data-page="home"]) .menu-btn{display:grid}
+  .menu-btn i,.menu-btn i::before,.menu-btn i::after{display:block;width:18px;height:1.5px;background:currentColor;transition:transform .3s,background .3s}
+  .menu-btn i{position:relative}
+  .menu-btn i::before,.menu-btn i::after{content:"";position:absolute;left:0}
+  .menu-btn i::before{top:-6px} .menu-btn i::after{top:6px}
+  .menu-btn[aria-expanded="true"] i{background:transparent}
+  .menu-btn[aria-expanded="true"] i::before{top:0;transform:rotate(45deg)}
+  .menu-btn[aria-expanded="true"] i::after{top:0;transform:rotate(-45deg)}
+}
+
+/* ---------- pages ---------- */
+.page{display:none}
+body[data-page="home"] #p-home,body[data-page="save-the-date"] #p-save-the-date,body[data-page="contact"] #p-contact,body[data-page="schedule"] #p-schedule{display:block}
+
+/* paper: every message in the site sits on a sheet of paper over the block print */
+.paper{position:relative;width:100%;max-width:640px;margin-inline:auto;background:var(--paper);border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 24px 44px -24px rgba(60,40,50,.55);text-align:center;padding:clamp(30px,6vw,56px) clamp(20px,5vw,48px)}
+.paper::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,112,15,.35);pointer-events:none}
+.l-small{display:block;font-family:var(--billa);font-size:clamp(34px,7vw,50px);line-height:1.5;margin-bottom:.15em;color:var(--marigold)}
+.l-title{margin:0;font-family:var(--kael);font-weight:400;font-size:clamp(46px,10.5vw,80px);line-height:1.3}
+.lead{margin:0 auto 22px;color:var(--grape-soft);max-width:46ch}
+
+/* ---------- HOME ---------- */
+.hero{position:relative;height:100svh;min-height:420px;overflow:hidden;cursor:pointer;background:var(--grape)}
+.hero-photo{position:absolute;inset:0;margin:0}
+.hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:20% 100%}  /* keep the couple (lower left of the photo) in frame */
+.hero::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(to top right,rgba(30,14,32,.3) 0%,rgba(30,14,32,0) 55%)}
+.hero-names{position:absolute;z-index:1;left:clamp(20px,5vw,72px);bottom:calc(max(23.5vw,31.5svh) + 24px);  /* sits just above the couple, whose heads are ~31% up from the bottom of the (bottom-anchored, cover-fit) 3072x2294 photo */
+  margin:0;max-width:calc(100% - 40px);
+  font-family:var(--ivy);font-weight:400;text-transform:uppercase;font-size:clamp(28px,4.8vw,80px);line-height:1.08;letter-spacing:.06em;color:var(--paper);
+  text-shadow:0 2px 24px rgba(30,14,32,.45)}
+.hero-names span{display:block}
+@media (max-width:640px){ .hero-names{font-size:9vw} }
+
+body[data-page="home"] .site-foot{display:none}
+
+/* ---------- SAVE THE DATE: the original standalone page, shown inside the site ---------- */
+#p-save-the-date iframe{display:block;width:100%;height:100svh;border:0;background:#F5EBD8}
+html.lock-outer,html.lock-outer body{overflow:hidden}
+body[data-page="save-the-date"] .site-foot{display:none}
+
+/* ---------- CONTACT / SCHEDULE ---------- */
+.wrap{padding:clamp(28px,6vw,64px) clamp(16px,4vw,32px) clamp(48px,8vw,90px)}
+.wrap .l-title{font-size:clamp(40px,8.4vw,60px);margin-block:10px 18px;text-wrap:balance}
+form{display:grid;gap:20px;max-width:520px;margin-inline:auto;text-align:left}
+.field{display:grid;gap:7px;min-width:0}
+.field>label,.field legend{padding:0}
+fieldset{border:0;margin:0;padding:0;display:grid;gap:8px;min-width:0}
+input[type="text"],input[type="tel"],input[type="email"]{width:100%;font-size:16px;color:var(--grape);background:#fff;border:1px solid rgba(84,53,85,.3);border-radius:0;padding:12px 14px;-webkit-appearance:none;appearance:none}
+input::placeholder{color:rgba(84,53,85,.45)}
+.addr-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:10px}
+@media (max-width:480px){ .addr-grid{grid-template-columns:1fr 1fr} .addr-grid .city{grid-column:1 / -1} }
+.submit{justify-self:start;padding:16px 28px;padding-inline:calc(28px + .26em) 28px;border:0;background:var(--btn);color:var(--btn-ink);font-family:var(--ivy);font-size:13px;letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
+.form-note{margin:0;font-size:12px;color:var(--grape-soft)}
+.thanks{max-width:520px;margin:0 auto;padding:22px;border:1px solid var(--line);background:#fff}
+.thanks .l-title{font-size:48px;margin:0}
+.reach{margin:34px 0 0;color:var(--grape-soft)}
+.reach a{color:var(--marigold)}
+.days{display:grid;gap:18px;margin-top:26px;text-align:center}
+.day{padding:22px 16px;border:1px solid var(--line);background:#fff}
+.day{padding:26px 16px 30px}
+.day .l-small{font-size:clamp(32px,7vw,42px);margin-bottom:.5em}
+.day .when{margin:0 0 .55em;font-family:var(--billa);font-size:clamp(36px,8vw,52px);line-height:1.45;color:var(--grape)}
+.day p:not(.when){margin:0;color:var(--grape-soft)}
+
+/* ---------- site footer ---------- */
+.site-foot{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:26px clamp(16px,4vw,40px) 36px;background:rgba(255,251,245,.94);border-top:1px solid rgba(201,112,15,.55)}
+.foot-name{margin:0;font-family:var(--kael);font-size:34px;line-height:1.3}
+.foot-name .amp{font-size:.7em}
+.preview{margin-top:8px;width:100%;max-width:560px;border:1px dashed var(--line);padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px}
+.preview .label{width:100%;font-size:10px}
+.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line)}
+.seg button,.ghost{border:0;background:transparent;color:var(--grape);padding:7px 14px;font-size:13px;cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink)}
+.ghost{border:1px solid var(--btn);color:var(--btn)}
+
+@media (prefers-reduced-motion: reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0s !important}
+}
+</style>
+</head>
+<body data-page="home">
+
+<button type="button" class="menu-btn" id="menu-btn" aria-label="Menu" aria-controls="nav" aria-expanded="false"><i aria-hidden="true"></i></button>
+<header class="nav" id="nav">
+  <nav class="tabs" aria-label="Site">
+    <a href="#home" data-tab="home">Home</a>
+    <a href="#save-the-date" data-tab="save-the-date">Save the Date</a>
+    <a href="#contact" data-tab="contact">Contact Information</a>
+    <a href="#schedule" data-tab="schedule">Schedule</a>
+  </nav>
+</header>
+
+<main>
+  <!-- HOME -->
+  <section class="page" id="p-home" aria-label="Home">
+    <!-- cover photo: img/cover.webp (Real-ESRGAN 4x upscale of the original 1026x766 photo) -->
+    <div class="hero" id="hero">
+      <figure class="hero-photo"><img src="img/cover.webp" alt="Isha and Jonathan on a stone lookout above a bay, with the ocean and a green headland behind them" width="3072" height="2294"></figure>
+      <h1 class="hero-names"><span>Isha</span><span>&amp; Jonathan</span></h1>
+    </div>
+  </section>
+
+  <!-- SAVE THE DATE (the original page, unchanged) -->
+  <section class="page" id="p-save-the-date" aria-label="Save the date">
+    <iframe id="std-frame" title="Save the date" allow="autoplay" src="about:blank"></iframe>
+  </section>
+
+  <!-- CONTACT INFORMATION -->
+  <section class="page" id="p-contact" aria-label="Contact information">
+    <div class="wrap">
+      <article class="paper">
+        <span class="label">Contact Information</span>
+        <h2 class="l-title">Where should we send your invitation?</h2>
+        <p class="lead">Share your contact details and your formal invitation will find its way to you.</p>
+        <form id="rsvp-form">
+          <div class="field">
+            <label class="label" for="rsvp-name">Name</label>
+            <input type="text" id="rsvp-name" name="name" placeholder="Your name(s)" autocomplete="name" required>
+          </div>
+          <fieldset class="field">
+            <legend class="label">Mailing address</legend>
+            <input type="text" id="addr-street" name="street" autocomplete="street-address" placeholder="Street address" required>
+            <div class="addr-grid">
+              <input type="text" class="city" id="addr-city" name="city" autocomplete="address-level2" placeholder="City" required>
+              <input type="text" id="addr-state" name="state" autocomplete="address-level1" placeholder="State" required>
+              <input type="text" id="addr-zip" name="zip" autocomplete="postal-code" inputmode="numeric" placeholder="ZIP" required>
+            </div>
+          </fieldset>
+          <div class="field">
+            <label class="label" for="rsvp-phone">Phone number</label>
+            <input type="tel" id="rsvp-phone" name="phone" autocomplete="tel" placeholder="(555) 555-0123">
+          </div>
+          <div class="field">
+            <label class="label" for="rsvp-email">Email address</label>
+            <input type="email" id="rsvp-email" name="email" autocomplete="email" placeholder="you@example.com">
+          </div>
+          <button type="submit" class="submit">Send</button>
+          <p class="form-note">Preview: answers aren't saved yet. On the live site they go straight to our guest list.</p>
+        </form>
+        <div class="thanks" id="thanks" hidden>
+          <p class="l-title">Thank you</p>
+          <p id="thanks-copy">We've got your answer.</p>
+        </div>
+        <p class="reach">Questions? Write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a></p>
+      </article>
+    </div>
+  </section>
+
+  <!-- SCHEDULE -->
+  <section class="page" id="p-schedule" aria-label="Schedule">
+    <div class="wrap">
+      <article class="paper">
+        <span class="label">Schedule</span>
+        <h2 class="l-title">The weekend</h2>
+        <p class="lead">Skylands Manor, Ringwood, New Jersey. The full schedule will come with your formal invitation.</p>
+        <div class="days">
+          <div class="day v-both"><span class="l-small">Day one</span><p class="when">July 9, 2027</p><p>Details to follow</p></div>
+          <div class="day"><span class="l-small v-both">Day two</span><span class="l-small v-one">The wedding</span><p class="when">July 10, 2027</p><p>Details to follow</p></div>
+        </div>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="site-foot">
+  <p class="foot-name">Isha <span class="amp">&amp;</span> Jonathan</p>
+  <div class="preview">
+    <span class="label">Preview controls &middot; not on the guest site</span>
+    <div class="seg" role="group" aria-label="Guest version">
+      <button type="button" data-v="both" aria-pressed="true">Both days</button>
+      <button type="button" data-v="one" aria-pressed="false">July 10 only</button>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var html = document.documentElement, body = document.body;
+  var nav = document.getElementById('nav'), frame = document.getElementById('std-frame');
+  var PAGES = ['home', 'save-the-date', 'contact', 'schedule'];
+  var TITLES = {home: 'Isha & Jonathan', 'save-the-date': 'Save the Date | Isha & Jonathan', contact: 'Contact Information | Isha & Jonathan', schedule: 'Schedule | Isha & Jonathan'};
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+
+  /* sidebar: on Home it slides out on the first click (or key press). On wide screens it then stays on every tab; on narrow screens it is a drawer opened by the menu button. */
+  var narrow = window.matchMedia('(max-width:860px)'), revealed = false, drawer = false, menuBtn = document.getElementById('menu-btn');
+  function syncSide(){
+    var open = body.dataset.page === 'home' ? revealed : (narrow.matches ? drawer : true);
+    nav.classList.toggle('open', open);
+    menuBtn.setAttribute('aria-expanded', String(open && body.dataset.page !== 'home'));
+  }
+  function route(){
+    var h = (location.hash || '#home').slice(1);
+    if (PAGES.indexOf(h) < 0) h = 'home';
+    body.dataset.page = h;
+    document.title = TITLES[h];
+    document.querySelectorAll('.tabs a').forEach(function(a){
+      if (a.dataset.tab === h) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
+    });
+    window.scrollTo(0, 0);
+    drawer = false;
+    if (h !== 'home' && !narrow.matches) revealed = true;
+    syncSide();
+    html.classList.toggle('lock-outer', h === 'save-the-date');
+    /* the save the date loads fresh on every visit (closed envelope) and is unloaded on leaving, which also stops its music */
+    if (h === 'save-the-date') { if (frame.getAttribute('src') === 'about:blank') frame.src = 'save-the-date.html'; }
+    else if (frame.getAttribute('src') !== 'about:blank') frame.src = 'about:blank';
+  }
+  /* home: the sidebar appears on the first click (or key press) anywhere on the page and stays for the rest of the visit */
+  function reveal(){ revealed = true; syncSide(); }
+  document.getElementById('hero').addEventListener('click', function(){ if (narrow.matches && revealed) { revealed = false; syncSide(); } else reveal(); });
+  window.addEventListener('keydown', function(e){ if (body.dataset.page === 'home' && !revealed && e.key !== 'Tab') reveal(); });
+  nav.addEventListener('focusin', function(){ if (body.dataset.page === 'home') reveal(); else if (narrow.matches) { drawer = true; syncSide(); } });
+  menuBtn.addEventListener('click', function(){ drawer = !drawer; syncSide(); });
+  document.addEventListener('click', function(e){ if (drawer && !nav.contains(e.target) && !menuBtn.contains(e.target)) { drawer = false; syncSide(); } });
+  narrow.addEventListener('change', syncSide);
+  window.addEventListener('hashchange', route);
+
+  /* ---- guest version (each guest's link sets this on the live site) ---- */
+  function setVersion(v){
+    body.dataset.version = v;
+    document.querySelectorAll('.seg button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.v === v)); });
+  }
+  document.querySelectorAll('.seg button').forEach(function(b){ b.addEventListener('click', function(){ setVersion(b.dataset.v); }); });
+  setVersion('both');
+
+  /* ---- contact form ---- */
+  var form = document.getElementById('rsvp-form');
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    var name = form.elements.name.value.trim() || 'friends';
+    document.getElementById('thanks-copy').textContent = "Thank you, " + name + ". Your invitation will be on its way.";
+    form.hidden = true;
+    document.getElementById('thanks').hidden = false;
+  });
+
+  route();
+})();
+</script>
+</body>
+</html>
