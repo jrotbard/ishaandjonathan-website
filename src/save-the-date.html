@@ -142,12 +142,6 @@ body.opening .after{opacity:1;visibility:visible;transform:none;transition:opaci
 footer{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding-inline:clamp(22px,4vw,40px);padding-block:30px 40px;border-top:1px solid var(--line)}
 .foot-name{margin:0;font-family:var(--script);font-size:32px;line-height:1.2}
 .foot-name .amp{font-size:.6em}
-.preview{margin-top:14px;width:100%;max-width:560px;border:1px dashed var(--line);padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px}
-.preview .label{width:100%;font-size:10px}
-.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line)}
-.seg button,.ghost{border:0;background:transparent;color:var(--grape);padding:7px 14px;font-size:13px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink)}
-.ghost{border:1px solid var(--btn);color:var(--btn)}
 
 /* ---------- background music toggle ---------- */
 .music{position:fixed;right:clamp(24px,4vw,40px);bottom:clamp(24px,4vw,40px);z-index:40;width:48px;height:48px;padding:0;border-radius:50%;border:1px solid var(--line);background:rgba(255,251,252,.94);color:var(--grape);display:grid;place-items:center;cursor:pointer;box-shadow:0 8px 20px -10px rgba(60,40,50,.45);opacity:0;visibility:hidden;transition:opacity .6s,visibility 0s .6s}
@@ -198,7 +192,7 @@ body.petals-on .petals{display:block}
 </style>
 
 </head>
-<body>
+<body data-version="{{VERSION}}">
 <main>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
     <defs>
@@ -285,14 +279,6 @@ body.petals-on .petals{display:block}
 
   <footer>
     <p class="foot-name">Isha <span class="amp">&amp;</span> Jonathan</p>
-    <div class="preview">
-      <span class="label">Preview controls &middot; not on the guest site</span>
-      <div class="seg" role="group" aria-label="Guest version">
-        <button type="button" id="ver-both" data-v="both" aria-pressed="true">Both days</button>
-        <button type="button" id="ver-one" data-v="one" aria-pressed="false">July 10 only</button>
-      </div>
-      <button type="button" class="ghost" id="replay">Replay envelope</button>
-    </div>
   </footer>
 </main>
 
@@ -400,7 +386,6 @@ body.petals-on .petals{display:block}
     }); });
   }
   env.addEventListener('click', openEnvelope);
-  document.getElementById('replay').addEventListener('click', replay);
   window.addEventListener('resize', fitClosed);
   window.addEventListener('load', fitClosed);
   window.addEventListener('pageshow', function(e){ if (e.persisted) replay(); else fitClosed(); });
@@ -424,7 +409,7 @@ body.petals-on .petals{display:block}
   }
   tick(); setInterval(tick, 1000);
 
-  /* ---- guest version (set by each guest's link on the live site) ---- */
+  /* ---- guest version (both days or July 10 only), from <body data-version> ---- */
   function calHref(v){
     var dates = v === 'both' ? '20270709/20270711' : '20270710/20270711';
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE&text=' + encodeURIComponent("Isha & Jonathan's Wedding") +
@@ -433,13 +418,11 @@ body.petals-on .petals{display:block}
   function setVersion(v){
     version = v;
     body.dataset.version = v;
-    document.querySelectorAll('.seg button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.v === v)); });
     document.getElementById('cal-google').href = calHref(v);
     document.getElementById('cal-apple').href = v === 'both' ? 'cal/isha-jonathan-wedding.ics' : 'cal/isha-jonathan-wedding-july10.ics';
     tick();
   }
-  document.querySelectorAll('.seg button').forEach(function(b){ b.addEventListener('click', function(){ setVersion(b.dataset.v); }); });
-  setVersion('both');
+  setVersion(body.dataset.version === 'one' ? 'one' : 'both');   /* baked into <body data-version> when the site is built; see build.py */
 
   /* ---- Apple Calendar: the .ics file is served by the live site; if it is missing (preview), say so instead of failing silently ---- */
   document.getElementById('cal-apple').addEventListener('click', function(e){

@@ -134,19 +134,13 @@ input::placeholder{color:rgba(84,53,85,.45)}
 .site-foot{display:flex;flex-direction:column;align-items:center;gap:10px;text-align:center;padding:26px clamp(16px,4vw,40px) 36px;background:rgba(255,251,245,.94);border-top:1px solid rgba(201,112,15,.55)}
 .foot-name{margin:0;font-family:var(--kael);font-size:34px;line-height:1.3}
 .foot-name .amp{font-size:.7em}
-.preview{margin-top:8px;width:100%;max-width:560px;border:1px dashed var(--line);padding:14px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:10px 14px}
-.preview .label{width:100%;font-size:10px}
-.seg{display:inline-flex;flex-wrap:wrap;border:1px solid var(--line)}
-.seg button,.ghost{border:0;background:transparent;color:var(--grape);padding:7px 14px;font-size:13px;cursor:pointer}
-.seg button[aria-pressed="true"]{background:var(--btn);color:var(--btn-ink)}
-.ghost{border:1px solid var(--btn);color:var(--btn)}
 
 @media (prefers-reduced-motion: reduce){
   *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important;transition-delay:0s !important}
 }
 </style>
 </head>
-<body data-page="home">
+<body data-page="home" data-version="{{VERSION}}">
 
 <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-controls="nav" aria-expanded="false"><i aria-hidden="true"></i></button>
 <div class="scrim" id="scrim"></div>
@@ -240,13 +234,6 @@ input::placeholder{color:rgba(84,53,85,.45)}
 
 <footer class="site-foot">
   <p class="foot-name">Isha <span class="amp">&amp;</span> Jonathan</p>
-  <div class="preview">
-    <span class="label">Preview controls &middot; not on the guest site</span>
-    <div class="seg" role="group" aria-label="Guest version">
-      <button type="button" data-v="both" aria-pressed="true">Both days</button>
-      <button type="button" data-v="one" aria-pressed="false">July 10 only</button>
-    </div>
-  </div>
 </footer>
 
 <script>
@@ -285,13 +272,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
   window.addEventListener('keydown', function(e){ if (e.key === 'Escape') setOpen(false); });
   window.addEventListener('hashchange', route);
 
-  /* ---- guest version (each guest's link sets this on the live site) ---- */
-  function setVersion(v){
-    body.dataset.version = v;
-    document.querySelectorAll('.seg button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.dataset.v === v)); });
-  }
-  document.querySelectorAll('.seg button').forEach(function(b){ b.addEventListener('click', function(){ setVersion(b.dataset.v); }); });
-  setVersion('both');
+  /* guest version (both days or July 10 only) is baked into <body data-version> when the site is built; see build.py */
 
   /* ---- contact form: each submission becomes one row in the "Contact Form Responses" tab of the Isha & Jonathan Google Sheet,
           through a small Google Apps Script web app (see CLAUDE.md). Paste that web app's URL below. ---- */
