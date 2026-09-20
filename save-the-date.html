@@ -74,9 +74,9 @@ main::after{inset:8px;border:1.5px solid #D9892A;border-image:linear-gradient(13
 .letter .n{display:block;font-family:var(--script);font-size:9.6cqw;line-height:1;margin-top:1.4cqw}
 .letter .n2{margin-top:-.4cqw}
 .letter .amp{display:block;font-family:var(--didone);font-style:italic;font-size:5.6cqw;line-height:1;color:var(--marigold);margin-top:.8cqw}
-.frame{left:0cqw;width:46cqw;aspect-ratio:100 / 125;top:-46cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
-.frame .ph{position:absolute;left:12.6%;top:9.1%;width:74.8%;height:77.8%;border-radius:50%;object-fit:cover;object-position:50% 22%;background:var(--blush-deep)}
-.frame .ring{position:absolute;left:-12.3%;top:-9.6%;width:114%;height:112.8%;pointer-events:none}
+.frame{left:0cqw;width:47.5cqw;aspect-ratio:100 / 125;top:-46cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
+.frame .ph{position:absolute;left:12.6%;top:9%;width:74.8%;height:78%;border-radius:50%;object-fit:cover;object-position:50% 22%;background:var(--blush-deep)}
+.frame .ring{position:absolute;left:-14%;top:-9.6%;width:114%;height:112.8%;pointer-events:none}
 .stage:not([data-state="closed"]) .letter,.stage:not([data-state="closed"]) .frame{opacity:1;transform:translateY(0) rotate(var(--r))}
 /* date on a heart, and the wax seal, on the envelope front */
 .heart{position:absolute;left:50%;opacity:0;transition:opacity .9s ease 2.3s,transform 1.1s cubic-bezier(.2,.8,.2,1) 2.3s}
@@ -454,8 +454,8 @@ body.petals-on .petals{display:block}
 
   /* ---- "Add your contact info" opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
   document.getElementById('open-details').addEventListener('click', function(){
-    try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#contact'; return; } } catch (err) {}
-    window.location.href = 'index.html#contact';
+    try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#rsvp'; return; } } catch (err) {}
+    window.location.href = 'index.html#rsvp';
   });
 })();
 </script>
