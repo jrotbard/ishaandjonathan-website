@@ -6,7 +6,7 @@
 <title>Isha &amp; Jonathan Save the Date</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Libre+Baskerville:ital@0;1&family=Pinyon+Script&family=Marcellus&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..600;1,6..96,400..600&family=Libre+Baskerville:ital@0;1&family=Pinyon+Script&family=Marcellus&family=Tenor+Sans&display=swap">
 <style>
 /* One visual world: moss envelope on blush pink, Grape Fizz type, marigold accents. Painted explicitly in any host theme. */
 :root{
@@ -15,6 +15,8 @@
   --line:rgba(84,53,85,.2); --btn:#C0660B; --btn-ink:#FFFBF5;
   --script:"Pinyon Script","Snell Roundhand","Apple Chancery",cursive;
   --caps:"Marcellus","Trajan Pro",Georgia,serif;
+  --ivy:"Ivy Mode","Tenor Sans","Optima",Georgia,sans-serif;   /* same lettering as the site menu */
+  --rose:#CFA9A5; --plum:#3B2140;   /* same colors as the menu button and sidebar */
   --didone:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
   --text:"Libre Baskerville","Baskerville",Georgia,serif;
 }
@@ -105,7 +107,8 @@ body.opening .after{opacity:1;visibility:visible;transform:none;transition:opaci
 .cue{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;cursor:pointer;color:var(--grape)}
 .cue i{font-style:normal;font-size:18px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
 /* same "Scroll" cue, pinned to the bottom of the screen once the envelope has opened; fades out as soon as the guest scrolls */
-.scroll-hint{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:35;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 22px 6px;background:rgba(255,251,245,.94);border:1px solid rgba(201,112,15,.55);border-radius:999px;box-shadow:0 8px 20px -10px rgba(60,40,50,.5);cursor:pointer;color:var(--grape);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.scroll-hint{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:35;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 26px 8px;background:var(--rose);border:0;border-radius:999px;box-shadow:0 0 0 2px var(--paper),0 4px 16px -4px rgba(30,14,32,.45);cursor:pointer;color:var(--plum);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.scroll-hint .label{font-family:var(--ivy);font-size:14px;line-height:1.5;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;color:var(--plum)}
 .scroll-hint i{font-style:normal;font-size:20px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
 body.opened:not(.scrolled) .scroll-hint{opacity:1;visibility:visible;transition:opacity .9s ease .2s,visibility 0s}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}

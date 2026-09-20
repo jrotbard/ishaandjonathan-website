@@ -10,8 +10,9 @@ Static site behind a password page. No server, no framework; one small Python bu
 
 ## Password page
 - `ishaandjonathan.com` shows a password form styled like the Contact Information form. Each password opens its own hidden version folder (the folder name is a hash of the password, so no published file contains the passwords or the folder names).
-- Two versions: `both` (July 9 and 10) and `one` (July 10 only). The version is baked into `<body data-version>` at build time. There is no admin/preview switch any more.
-- Change the passwords: `python3 build.py --both "new password" --one "new password"`, then commit and push. Passwords are not case sensitive.
+- Three versions: `both` (July 9 and 10), `one` (July 10 only) and `may` (identical to `one` but with May 14, 2027 as the date, countdown and calendar files). The version is baked into `<body data-version>` at build time. There is no admin/preview switch any more. Both passwords and all three open the Save the Date tab.
+- Version data (date text, countdown target, Google/Apple calendar) lives in the `VERSIONS` map in `src/save-the-date.html`; calendar files are in `public/cal/`.
+- Change the passwords: `python3 build.py --both "new" --one "new" --may "new"` (any subset), then commit and push. Passwords are not case sensitive.
 - This is a soft gate, not real security: someone who knows a version's folder URL can open it without the password. Keep the URLs private.
 - Everything is `noindex` (meta tags, `robots.txt`, `X-Robots-Tag` header).
 
