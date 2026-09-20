@@ -309,7 +309,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     var data = {version: body.dataset.version === 'one' ? 'July 10 only' : 'Both days'};
     ['name', 'plusone', 'street', 'city', 'state', 'zip', 'phone', 'plusone_phone', 'email', 'plusone_email', 'website'].forEach(function(k){
       var v = form.elements[k] ? form.elements[k].value.trim() : '';
-      data[k] = v.charAt(0) === '=' ? ' ' + v : v;          /* a leading "=" would be stored as a spreadsheet formula */
+      data[k] = v.charAt(0) === '=' ? "'" + v : v;          /* a leading "=" would be stored as a spreadsheet formula; the apostrophe keeps it plain text */
     });
     sendBtn.disabled = true; sendBtn.textContent = 'Sending...';
     var ctl = ('AbortController' in window) ? new AbortController() : null;
