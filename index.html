@@ -26,7 +26,7 @@
 html{background:var(--cream)}
 html.locked,html.locked body{overflow:hidden}
 body{margin:0;color:var(--grape);font-family:var(--ivy);font-size:15px;line-height:1.7;text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;
-  background:var(--cream) url(img/blockprint-damask.svg) 0 0/256px 320px}
+  background:var(--cream) url(img/blockprint-peony.svg) 0 0/280px 355px}
 button,input,select,textarea{font:inherit;color:inherit}
 a{color:inherit}
 ::selection{background:var(--grape);color:var(--blush)}
@@ -75,6 +75,8 @@ body[data-page="home"] #p-home,body[data-page="save-the-date"] #p-save-the-date,
 .paper::before{content:"";position:absolute;inset:8px;border:1px solid rgba(201,112,15,.35);pointer-events:none}
 .l-small{display:block;font-family:var(--billa);font-size:clamp(34px,7vw,50px);line-height:1.5;margin-bottom:.15em;color:var(--marigold)}
 .l-title{margin:0;font-family:var(--kael);font-weight:400;font-size:clamp(46px,10.5vw,80px);line-height:1.3}
+.soon{min-height:100svh;margin:0;display:grid;place-items:center;padding:0 16px;font-family:var(--kael);font-weight:400;font-size:clamp(48px,11vw,96px);line-height:1.3;text-align:center;color:var(--grape);text-shadow:0 0 16px var(--cream),0 0 32px var(--cream),0 0 48px var(--cream)}
+body:is([data-page="schedule"],[data-page="travel"],[data-page="faqs"]) .site-foot{display:none}
 .lead{margin:0 auto 22px;color:var(--grape-soft);max-width:46ch}
 
 /* ---------- HOME ---------- */
@@ -207,46 +209,10 @@ input::placeholder{color:rgba(84,53,85,.45)}
     </div>
   </section>
 
-  <!-- SCHEDULE -->
-  <section class="page" id="p-schedule" aria-label="Schedule">
-    <div class="wrap">
-      <article class="paper">
-        <span class="label">Schedule</span>
-        <h2 class="l-title">The weekend</h2>
-        <p class="lead">Skylands Manor, Ringwood, New Jersey. The full schedule will come with your formal invitation.</p>
-        <div class="days">
-          <div class="day v-both"><span class="l-small">Day one</span><p class="when">July 9, 2027</p><p>Details to follow</p></div>
-          <div class="day"><span class="l-small v-both">Day two</span><span class="l-small v-one">The wedding</span><p class="when">July 10, 2027</p><p>Details to follow</p></div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- TRAVEL -->
-  <section class="page" id="p-travel" aria-label="Travel">
-    <div class="wrap">
-      <article class="paper">
-        <span class="label">Travel</span>
-        <h2 class="l-title">Getting here</h2>
-        <p class="lead">Skylands Manor, Ringwood, New Jersey. Travel and hotel details will come with your formal invitation.</p>
-        <div class="days">
-          <div class="day"><span class="l-small">Getting there</span><p>Details to follow</p></div>
-          <div class="day"><span class="l-small">Where to stay</span><p>Details to follow</p></div>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <!-- FAQS -->
-  <section class="page" id="p-faqs" aria-label="Frequently asked questions">
-    <div class="wrap">
-      <article class="paper">
-        <span class="label">FAQs</span>
-        <h2 class="l-title">Questions</h2>
-        <p class="lead">Answers to common questions will be posted here. Until then, write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a>.</p>
-      </article>
-    </div>
-  </section>
+  <!-- SCHEDULE, TRAVEL, FAQS: coming soon -->
+  <section class="page" id="p-schedule" aria-label="Schedule"><h2 class="soon">Coming soon</h2></section>
+  <section class="page" id="p-travel" aria-label="Travel"><h2 class="soon">Coming soon</h2></section>
+  <section class="page" id="p-faqs" aria-label="Frequently asked questions"><h2 class="soon">Coming soon</h2></section>
 </main>
 
 <footer class="site-foot">
