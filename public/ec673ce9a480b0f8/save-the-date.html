@@ -106,8 +106,7 @@ body.opening .after{opacity:1;visibility:visible;transform:none;transition:opaci
 .cue{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;cursor:pointer;color:var(--grape)}
 .cue i{font-style:normal;font-size:18px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
 /* same "Scroll" cue, pinned to the bottom of the screen once the envelope has opened; fades out as soon as the guest scrolls */
-.scroll-hint{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:35;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;padding:6px 14px;background:none;border:0;cursor:pointer;color:var(--grape);
-  text-shadow:0 0 10px var(--cream),0 0 18px var(--cream),0 0 26px var(--cream);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.scroll-hint{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:35;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 22px 6px;background:rgba(255,251,245,.94);border:1px solid rgba(201,112,15,.55);border-radius:999px;box-shadow:0 8px 20px -10px rgba(60,40,50,.5);cursor:pointer;color:var(--grape);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .scroll-hint i{font-style:normal;font-size:20px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
 body.opened:not(.scrolled) .scroll-hint{opacity:1;visibility:visible;transition:opacity .9s ease .2s,visibility 0s}
 @keyframes nudge{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}

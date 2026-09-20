@@ -102,7 +102,7 @@ input[type="password"],input[type="text"]{width:100%;font-size:16px;color:var(--
       var slug = hex.slice(0, 16);
       return fetch(slug + '/index.html', {cache: 'no-store'}).then(function(r){ return r.ok ? r.text() : ''; }).then(function(t){
         if (t.indexOf('name="invite-site"') < 0) throw 0;
-        window.location.assign(slug + '/');
+        window.location.assign(slug + '/#save-the-date');   /* both versions open on the Save the Date tab */
       });
     }).catch(function(){
       go.disabled = false;
