@@ -162,17 +162,6 @@ body.opening .music{opacity:1;visibility:visible;transition:opacity .6s 2s,visib
 @keyframes eq{0%,100%{height:30%}50%{height:100%}}
 
 /* ---------- RSVP sheet ---------- */
-dialog.sheet{border:0;padding:0;margin:auto;background:var(--cream) url(img/blockprint-peony.svg) 0 0/280px 355px;color:var(--grape);width:min(640px,calc(100vw - 32px));max-width:none;height:min(860px,calc(100vh - 48px));max-height:none;box-shadow:0 30px 90px -20px rgba(40,20,40,.5);overflow:hidden}
-dialog.sheet[open]{display:flex;flex-direction:column;animation:sheetIn .45s cubic-bezier(.2,.8,.2,1)}
-dialog.sheet::backdrop{background:rgba(84,53,85,.4);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
-@keyframes sheetIn{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-@media (max-width:600px){ dialog.sheet{width:100vw;height:100vh;height:100dvh;margin:0;inset:0} }
-.sheet-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px 12px 22px;border-bottom:1px solid var(--line)}
-.sheet-mark{margin:0;font-family:var(--script);font-size:32px;line-height:1.15}
-.sheet-mark .amp{font-size:.6em}
-.close{width:42px;height:42px;border-radius:50%;border:1px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-size:22px;line-height:1;cursor:pointer;display:grid;place-items:center;padding:0}
-.panel{flex:1;overflow-y:auto;padding:28px 22px 44px;-webkit-overflow-scrolling:touch}
-.panel h3{margin:0 0 8px;font-family:var(--script);font-weight:400;font-size:clamp(34px,8.6vw,46px);line-height:1.12;text-wrap:balance}
 .lead{margin:0 0 22px;font-style:italic;color:var(--grape-soft);max-width:52ch}
 form{display:grid;gap:20px;max-width:540px}
 .field{display:grid;gap:7px;min-width:0}
@@ -193,9 +182,6 @@ textarea{min-height:88px;resize:vertical}
 @media (max-width:480px){ .addr-grid{grid-template-columns:1fr 1fr} .addr-grid .city{grid-column:1 / -1} }
 .submit{justify-self:start;padding:16px 28px;padding-inline:calc(28px + .26em) 28px;border:0;background:var(--btn);color:var(--btn-ink);font-family:var(--caps);font-size:13px;font-weight:400;letter-spacing:.26em;text-transform:uppercase;cursor:pointer}
 .form-note{margin:0;font-size:12px;font-style:italic;color:var(--grape-soft)}
-.thanks{padding:24px;border:1px solid var(--line);background:var(--card);max-width:540px}
-.thanks p{margin:0}
-.thanks .script{font-family:var(--script);font-size:40px;line-height:1.2;margin-bottom:4px}
 
 /* ---------- falling petals, once the envelope has opened ---------- */
 .petals{display:none;position:fixed;inset:0;z-index:55;pointer-events:none;overflow:hidden}
@@ -318,46 +304,7 @@ body.petals-on .petals{display:block}
 <audio id="music" loop preload="auto"><source src="audio/placeholder-music.wav" type="audio/wav"></audio>
 <button type="button" class="music" id="music-btn" aria-pressed="false" aria-label="Play music"><span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
 
-<!-- RSVP sheet -->
-<dialog class="sheet" id="details" aria-labelledby="sheet-title">
-  <div class="sheet-head">
-    <p class="sheet-mark" id="sheet-title">Isha <span class="amp">&amp;</span> Jonathan</p>
-    <button type="button" class="close" id="close-details" aria-label="Close">&times;</button>
-  </div>
-  <div class="panel">
-    <h3>Where should we send your invitation?</h3>
-    <p class="lead">Share your contact details and your formal invitation will find its way to you.</p>
-    <form id="rsvp-form">
-      <div class="field">
-        <label class="label" for="rsvp-name">Name</label>
-        <input type="text" id="rsvp-name" name="name" placeholder="Your name(s)" autocomplete="name" required>
-      </div>
-      <fieldset class="field">
-        <legend class="label">Mailing address</legend>
-        <input type="text" id="addr-street" name="street" autocomplete="street-address" placeholder="Street address" required>
-        <div class="addr-grid">
-          <input type="text" class="city" id="addr-city" name="city" autocomplete="address-level2" placeholder="City" required>
-          <input type="text" id="addr-state" name="state" autocomplete="address-level1" placeholder="State" required>
-          <input type="text" id="addr-zip" name="zip" autocomplete="postal-code" inputmode="numeric" placeholder="ZIP" required>
-        </div>
-      </fieldset>
-      <div class="field">
-        <label class="label" for="rsvp-phone">Phone number</label>
-        <input type="tel" id="rsvp-phone" name="phone" autocomplete="tel" placeholder="(555) 555-0123">
-      </div>
-      <div class="field">
-        <label class="label" for="rsvp-email">Email address</label>
-        <input type="email" id="rsvp-email" name="email" autocomplete="email" placeholder="you@example.com">
-      </div>
-      <button type="submit" class="submit">Send</button>
-      <p class="form-note">Preview: answers aren't saved yet. On the live site they go straight to our guest list.</p>
-    </form>
-    <div class="thanks" id="thanks" hidden>
-      <p class="script">Thank you</p>
-      <p id="thanks-copy">We've got your answer.</p>
-    </div>
-  </div>
-</dialog>
+
 
 <script>
 (function(){
@@ -505,24 +452,10 @@ body.petals-on .petals{display:block}
     }).catch(function(){ document.getElementById('cal-note').hidden = false; });
   });
 
-  /* ---- RSVP sheet ---- */
-  var dlg = document.getElementById('details');
+  /* ---- "Add your contact info" opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
   document.getElementById('open-details').addEventListener('click', function(){
-    if (typeof dlg.showModal === 'function') dlg.showModal(); else dlg.setAttribute('open', '');
-    html.classList.add('locked');
-  });
-  function closeSheet(){ if (dlg.open) dlg.close(); }
-  document.getElementById('close-details').addEventListener('click', closeSheet);
-  dlg.addEventListener('close', function(){ html.classList.remove('locked'); });
-  dlg.addEventListener('click', function(e){ if (e.target === dlg) closeSheet(); });
-
-  var form = document.getElementById('rsvp-form');
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    var name = form.elements.name.value.trim() || 'friends';
-    document.getElementById('thanks-copy').textContent = "Thank you, " + name + ". Your invitation will be on its way.";
-    form.hidden = true;
-    document.getElementById('thanks').hidden = false;
+    try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#contact'; return; } } catch (err) {}
+    window.location.href = 'index.html#contact';
   });
 })();
 </script>
