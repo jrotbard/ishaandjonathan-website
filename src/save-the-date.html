@@ -10,6 +10,7 @@
 <style>
 /* One visual world: moss envelope on blush pink, Grape Fizz type, marigold accents. Painted explicitly in any host theme. */
 :root{
+  --card-gap:clamp(24px,4vw,44px);   /* the space between neighbouring cards */
   --blush:#FAE8EC; --blush-deep:#F4D9E0; --card:#FFFBFC; --cream:#F5EBD8;
   --grape:#543555; --grape-soft:rgba(84,53,85,.72); --marigold:#C9700F;
   --line:rgba(84,53,85,.2); --btn:#C0660B; --btn-ink:#FFFBF5;
@@ -49,7 +50,7 @@ main::after{inset:8px;border:1.5px solid #D9892A;border-image:linear-gradient(13
 .corner.br{bottom:-12px;right:-12px;transform:scale(-1,-1)}
 
 /* ---------- top: names + envelope ---------- */
-.top{position:relative;min-height:calc(100svh - 2 * clamp(13px,1.6vw,18px));display:flex;flex-direction:column;align-items:center;padding-inline:clamp(22px,4vw,40px);padding-block:clamp(14px,2.4vh,26px) 40px;padding-inline:clamp(12px,2.4vw,30px);overflow:hidden}
+.top{position:relative;min-height:calc(100svh - 2 * clamp(13px,1.6vw,18px));display:flex;flex-direction:column;align-items:center;padding-inline:clamp(22px,4vw,40px);padding-block:clamp(14px,2.4vh,26px) 24px;padding-inline:clamp(12px,2.4vw,30px);overflow:hidden}
 .top::before{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(112deg,rgba(84,53,85,.014) 0 1px,transparent 1px 5px)}
 .holder{position:relative;width:min(100%,1040px);container-type:inline-size}
 .stage{position:relative;height:132cqw;-webkit-tap-highlight-color:transparent}
@@ -66,7 +67,12 @@ main::after{inset:8px;border:1.5px solid #D9892A;border-image:linear-gradient(13
 .stage:not([data-state="closed"]) .flap img{transform:perspective(1100px) rotateX(-180deg)}
 .stage:not([data-state="closed"]) .flap .flap-front{opacity:0}
 .stage:not([data-state="closed"]) .flap .flap-back{opacity:1}
-.env-front{z-index:3;filter:drop-shadow(0 16px 16px rgba(60,40,50,.18))}
+.env-front,.env-front-open{z-index:3;filter:drop-shadow(0 16px 16px rgba(60,40,50,.18))}
+/* the closed envelope keeps its side wings; once opened they are removed (a flat-topped front, so the photo and card rise out of the whole opening) */
+.env-front-open{opacity:0;transition:opacity .5s ease .1s}
+.env-front{transition:opacity .5s ease .1s}
+.stage:not([data-state="closed"]) .env-front{opacity:0}
+.stage:not([data-state="closed"]) .env-front-open{opacity:1}
 .seal-btn{position:absolute;left:50.5%;top:73.5%;z-index:6;width:19cqw;height:19cqw;transform:translate(-50%,-50%);border-radius:50%;border:0;background:transparent;cursor:pointer;padding:0}
 .stage:not([data-state="closed"]) .seal-btn{pointer-events:none;visibility:hidden}
 .stage[data-state="closed"] .env{cursor:pointer}
@@ -81,7 +87,7 @@ main::after{inset:8px;border:1.5px solid #D9892A;border-image:linear-gradient(13
 .letter .n{display:block;font-family:var(--script);font-size:9.8cqw;line-height:1;margin-top:3.2cqw}
 .letter .n2{margin-top:.4cqw}
 .letter .amp{display:block;font-family:var(--didone);font-style:italic;font-size:6.2cqw;line-height:1;color:var(--marigold);margin-top:1.6cqw}
-.frame{left:0cqw;width:47.5cqw;aspect-ratio:100 / 125;top:-46cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
+.frame{left:0cqw;width:47.5cqw;aspect-ratio:100 / 125;top:-40cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
 .frame .ph{position:absolute;left:12.6%;top:9%;width:74.8%;height:78%;border-radius:50%;object-fit:cover;object-position:50% 22%;background:var(--blush-deep)}
 .frame .ring{position:absolute;left:-14%;top:-9.6%;width:114%;height:112.8%;pointer-events:none}
 .stage:not([data-state="closed"]) .letter,.stage:not([data-state="closed"]) .frame{opacity:1;transform:translateY(0) rotate(var(--r))}
@@ -93,14 +99,14 @@ body.opening .hint{opacity:0;visibility:hidden}
 /* until the seal is tapped, the page is only the envelope */
 body:not(.opening) .countdown,body:not(.opening) .closing,body:not(.opening) footer{display:none}
 
-.after{position:relative;width:min(100%,760px);padding:clamp(28px,4.5vw,46px) clamp(12px,4vw,40px);background:#FFFBF5 url(img/card-texture.svg) 0 0/240px 300px;border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 22px 40px -22px rgba(60,40,50,.55);display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:clamp(10px,2.4vw,22px);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease,visibility 0s .8s}
+.after{position:relative;width:min(100%,760px);padding:clamp(28px,4.5vw,46px) 10px;background:#FFFBF5 url(img/card-texture.svg) 0 0/240px 300px;border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 22px 40px -22px rgba(60,40,50,.55);display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:clamp(10px,2.4vw,22px);opacity:0;visibility:hidden;transform:translateY(10px);transition:opacity .8s ease,transform .8s ease,visibility 0s .8s}
 body.opening .after{opacity:1;visibility:visible;transform:none;transition:opacity 1.2s ease 2.8s,transform 1.2s ease 2.8s,visibility 0s 2.8s}
 .after .meet{font-size:clamp(12px,3.2vw,16px)}
 .after .place{margin:2px 0 4px;font-family:var(--script);font-size:clamp(46px,12vw,84px);line-height:1.1}
 .after .town{font-size:clamp(11px,3vw,14px);color:var(--grape)}
 .after .on{margin-top:12px;font-family:var(--didone);font-size:clamp(17px,4.6vw,26px);letter-spacing:.04em}
 .after .on .amp{font-size:.8em}
-.after .venue{--lb:clamp(20px,5.2vw,30px);position:relative;isolation:isolate;margin:calc(20px + var(--lb)) auto calc(6px + var(--lb));width:min(calc(100% - 2 * var(--lb) - 8px),600px);padding:7px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 24px -14px rgba(60,40,50,.5)}
+.after .venue{--lb:clamp(20px,5.2vw,30px);position:relative;isolation:isolate;margin:calc(20px + var(--lb)) auto calc(6px + var(--lb));width:min(calc(100% - 2 * var(--lb) - 14px),700px);padding:7px;background:#fff;box-shadow:0 1px 2px rgba(0,0,0,.08),0 14px 24px -14px rgba(60,40,50,.5)}
 .after .venue::before{content:"";position:absolute;inset:calc(-1 * var(--lb));border:var(--lb) solid transparent;border-image:url(img/lace-border.svg) 60 round;pointer-events:none;z-index:-1}
 .after .venue img{display:block;width:100%;height:auto;aspect-ratio:3 / 2;object-fit:cover;object-position:50% 50%}
 .after .formal{margin-top:12px;font-family:var(--text);font-style:italic;font-size:clamp(14px,3.8vw,18px);color:var(--marigold)}
@@ -116,7 +122,7 @@ body.opened:not(.scrolled) .scroll-hint{opacity:1;visibility:visible;transition:
 .after::before,.countdown::before,.closing-inner::before{content:"";position:absolute;inset:7px;border:1px solid rgba(201,112,15,.32);pointer-events:none}
 
 /* ---------- countdown ---------- */
-.countdown{position:relative;text-align:center;width:min(calc(100% - 2 * clamp(12px,2.4vw,30px)),760px);margin:clamp(24px,4vw,44px) auto;padding-inline:clamp(18px,4vw,40px);padding-block:clamp(34px,5vw,56px);background:#FFFBF5 url(img/card-texture.svg) 0 0/240px 300px;border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 22px 40px -22px rgba(60,40,50,.55)}
+.countdown{position:relative;text-align:center;width:min(calc(100% - 2 * clamp(12px,2.4vw,30px)),760px);margin:calc(var(--card-gap) - 24px) auto 0;padding-inline:clamp(18px,4vw,40px);padding-block:clamp(34px,5vw,56px);background:#FFFBF5 url(img/card-texture.svg) 0 0/240px 300px;border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 22px 40px -22px rgba(60,40,50,.55)}
 .countdown>.label{margin:0}
 .cd-title{margin:8px 0 34px;font-family:var(--script);font-weight:400;font-size:clamp(42px,9vw,68px);line-height:1.1}
 .units{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));max-width:760px;margin-inline:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding-block:22px 18px}
@@ -126,13 +132,13 @@ body.opened:not(.scrolled) .scroll-hint{opacity:1;visibility:visible;transition:
 .unit .label{font-size:clamp(8px,2.2vw,10px);letter-spacing:.2em;padding-left:.2em}
 .cd-date{margin:26px 0 0;font-style:italic}
 .follow{margin:30px auto 0;max-width:36ch;color:var(--grape-soft)}
-.details-btn{display:block;width:min(100%,520px);margin:38px auto 0;padding:26px 24px;padding-inline:calc(24px + .2em) 24px;border:2px solid var(--btn);background:var(--btn);color:var(--btn-ink);font-family:var(--caps);font-size:clamp(15px,4.2vw,20px);font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 26px -12px rgba(150,80,10,.65),inset 0 0 0 4px rgba(255,251,245,.28);transition:background .2s,color .2s,transform .2s;animation:btnpulse 2.6s ease-in-out infinite}
+.details-btn{display:block;width:min(100%,520px);margin:38px auto 0;padding:26px 24px;padding-inline:calc(24px + .2em) 24px;border:2px solid var(--rose);background:var(--rose);color:var(--plum);font-family:var(--caps);font-size:clamp(15px,4.2vw,20px);font-weight:400;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;box-shadow:0 12px 26px -12px rgba(84,53,85,.55),inset 0 0 0 4px rgba(255,251,245,.4);transition:background .2s,color .2s,transform .2s;animation:btnpulse 2.6s ease-in-out infinite}
 @keyframes btnpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.025)}}
-.details-btn:hover{background:transparent;color:var(--btn)}
+.details-btn:hover{background:transparent;color:var(--plum)}
 
 /* ---------- closing ---------- */
 .closing{padding-inline:clamp(12px,2.4vw,30px)}
-.closing-inner{position:relative;width:min(100%,760px);margin:0 auto clamp(24px,4vw,44px);background:#FFFBF5 url(img/card-texture.svg) 0 0/240px 300px;border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 22px 40px -22px rgba(60,40,50,.55);display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-inline:clamp(18px,4vw,40px);padding-block:clamp(36px,6vw,64px)}
+.closing-inner{position:relative;width:min(100%,760px);margin:var(--card-gap) auto var(--card-gap);background:#FFFBF5 url(img/card-texture.svg) 0 0/240px 300px;border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 22px 40px -22px rgba(60,40,50,.55);display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;padding-inline:clamp(18px,4vw,40px);padding-block:clamp(36px,6vw,64px)}
 .monogram{position:relative;display:flex;align-items:center;justify-content:center;width:clamp(220px,60vw,320px);aspect-ratio:1;border:1.5px solid var(--marigold);border-radius:50%;margin-block:10px 16px}
 .monogram::before,.monogram::after{content:"";position:absolute;inset:9px;border:1px solid rgba(84,53,85,.35);border-radius:50%}
 .mono{--mx:-.163em;--my:.031em;position:relative;display:flex;align-items:center;font-family:var(--script);font-size:clamp(94px,25vw,136px);line-height:1;color:var(--grape);transform:translate(var(--mx),var(--my))}
@@ -239,6 +245,7 @@ body.petals-on .petals{display:block}
               <img class="ring" src="img/frame-oval.svg" alt="" width="114" height="141">
             </div>
           </div>
+          <img class="env-front-open" src="img/envelope-front-open-1200.webp" srcset="img/envelope-front-open-1200.webp 1200w, img/envelope-front-open-2400.webp 2400w" sizes="(orientation: portrait) 200vw, 100vw" alt="" width="1200" height="831">
           <img class="env-front" src="img/envelope-front-1200.webp" srcset="img/envelope-front-1200.webp 1200w, img/envelope-front-2400.webp 2400w" sizes="(orientation: portrait) 200vw, 100vw" alt="" width="1200" height="831">
           <button type="button" class="seal-btn" id="seal" aria-label="Break the seal to open your save the date"></button>
         </div>
@@ -268,7 +275,7 @@ body.petals-on .petals{display:block}
       <div class="unit"><span class="num" id="cd-mins">00</span><span class="label">Minutes</span></div>
       <div class="unit"><span class="num" id="cd-secs">00</span><span class="label">Seconds</span></div>
     </div>
-    <button type="button" class="details-btn" id="open-details">Share your details for the invitation</button>
+    <button type="button" class="details-btn" id="open-details">Where should we send your invitation?</button>
   </section>
 
   <!-- Closing -->
@@ -452,7 +459,7 @@ body.petals-on .petals{display:block}
     }).catch(function(){ document.getElementById('cal-note').hidden = false; });
   });
 
-  /* ---- the "Share your details for the invitation" button opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
+  /* ---- the "Where should we send your invitation?" button opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
   document.getElementById('open-details').addEventListener('click', function(){
     try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#contact'; return; } } catch (err) {}
     window.location.href = 'index.html#contact';
