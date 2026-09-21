@@ -122,8 +122,12 @@ input::placeholder{color:rgba(84,53,85,.45)}
 .form-error{margin:0;padding:12px 14px;border:1px solid #B23A2E;background:#FFF4F2;color:#7A2119;font-size:14px}
 .form-error a{color:inherit}
 .submit[disabled]{opacity:.6;cursor:progress}
-.thanks{max-width:520px;margin:0 auto;padding:22px;border:1px solid var(--line);background:#fff}
-.thanks .l-title{font-size:48px;margin:0}
+.thanks{margin:0;padding:clamp(6px,3vw,24px) 0}
+.thanks .t-name{margin:0 0 .35em;font-family:var(--kael);font-weight:400;font-size:clamp(40px,8.4vw,64px);line-height:1.3;text-wrap:balance}
+.thanks .t-copy{margin:0 auto;max-width:34ch;font-size:clamp(15px,3.6vw,18px);color:var(--grape-soft)}
+/* after a successful send, the card shows only the thank-you, centered on the page */
+.paper.sent>:not(.thanks){display:none}
+.wrap.sent{min-height:100svh;display:grid;place-items:center;padding-block:clamp(28px,6vw,64px)}
 .reach{margin:34px 0 0;color:var(--grape-soft)}
 .reach a{color:var(--marigold)}
 .days{display:grid;gap:18px;margin-top:26px;text-align:center}
@@ -220,9 +224,9 @@ input::placeholder{color:rgba(84,53,85,.45)}
           <p class="form-error" id="form-error" role="alert" hidden>Sorry, that didn't go through. Please try again, or write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a>.</p>
           <p class="form-note" id="form-note">Preview: answers aren't saved yet. On the live site they go straight to our guest list.</p>
         </form>
-        <div class="thanks" id="thanks" hidden>
-          <p class="l-title">Thank you</p>
-          <p id="thanks-copy">We've got your answer.</p>
+        <div class="thanks" id="thanks" hidden role="status">
+          <p class="t-name" id="thanks-name"></p>
+          <p class="t-copy">Your invitation will be on its way.</p>
         </div>
         <p class="reach">Questions? Write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a></p>
       </article>
@@ -284,9 +288,11 @@ input::placeholder{color:rgba(84,53,85,.45)}
   var sendBtn = document.getElementById('rsvp-send'), formError = document.getElementById('form-error');
   if (FORM_ENDPOINT) document.getElementById('form-note').hidden = true;
   function showThanks(name){
-    document.getElementById('thanks-copy').textContent = "Thank you, " + (name || 'friends') + ". Your invitation will be on its way.";
-    form.hidden = true;
+    document.getElementById('thanks-name').textContent = "Thank you, " + (name || 'friends') + ".";
     document.getElementById('thanks').hidden = false;
+    document.querySelector('#p-contact .paper').classList.add('sent');
+    document.querySelector('#p-contact .wrap').classList.add('sent');
+    window.scrollTo(0, 0);
   }
   form.addEventListener('submit', function(e){
     e.preventDefault();
