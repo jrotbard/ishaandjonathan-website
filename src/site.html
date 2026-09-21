@@ -111,7 +111,10 @@ body[data-page="home"]{overflow:hidden;background:none}
   .hero-photo{inset:auto;top:0;left:0;right:0;height:calc(100svh + var(--bleed-top))}
   .hero-ext{display:block;position:absolute;left:0;right:0;top:calc(100svh + var(--bleed-top));height:var(--bleed-bottom);background:linear-gradient(to right,#B0AEA5,#B9B6AB 12.5%,#BAB5A9 25%,#C0BBB0 37.5%,#B0A99D 50%,#B1A99D 62.5%,#A9A195 75%,#A09A94 87.5%,#C0B8A9)}
   .hero-snap{display:block;position:absolute;left:0;top:var(--bleed-top);width:1px;height:100svh;scroll-snap-align:start;visibility:hidden}
-  .hero-names{bottom:calc(var(--bleed-bottom) + max(23.5vw,.315 * (100svh + var(--bleed-top))) + 24px)}
+  .hero .hero-names{bottom:calc(var(--bleed-bottom) + max(23.5vw,.315 * (100svh + var(--bleed-top))) + 24px)}   /* .hero prefix: outranks the plain .hero-names rules above, including the small-phone one */
+}
+@media (hover:none) and (pointer:coarse) and (max-width:640px){
+  .hero .hero-names{bottom:calc(var(--bleed-bottom) + max(23.5vw,.315 * (100svh + var(--bleed-top))) + 12px)}
 }
 
 @media (max-width:640px){ .hero-names{font-size:14vw;bottom:calc(max(23.5vw,31.5svh) + 12px)} }
@@ -284,6 +287,13 @@ input::placeholder{color:rgba(84,53,85,.45)}
   window.addEventListener('load', function(){ window.scrollTo(0, homeOffset()); });
   window.addEventListener('pageshow', function(){ window.scrollTo(0, homeOffset()); });
   window.addEventListener('orientationchange', function(){ setTimeout(function(){ window.scrollTo(0, homeOffset()); }, 300); });
+  /* the page can be dragged a little; a moment after the finger lifts it eases back to the resting position (backs up the CSS scroll-snap, which not every browser honors) */
+  var settle = 0;
+  window.addEventListener('scroll', function(){
+    if (!touch.matches || body.dataset.page !== 'home') return;
+    clearTimeout(settle);
+    settle = setTimeout(function(){ var t = homeOffset(); if (Math.abs(window.scrollY - t) > 1) window.scrollTo({top: t, behavior: 'smooth'}); }, 140);
+  }, {passive: true});
   function route(){
     var h = (location.hash || '#home').slice(1);
     if (h === 'rsvp') h = 'contact';  /* old link */
