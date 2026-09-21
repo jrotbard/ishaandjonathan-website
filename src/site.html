@@ -72,7 +72,7 @@ a{color:inherit}
 /* ---------- pages ---------- */
 body[data-page="privacy"] #p-privacy,body[data-page="terms"] #p-terms{display:block}
 .page{display:none}
-body[data-page="home"] #p-home,body[data-page="save-the-date"] #p-save-the-date,body[data-page="contact"] #p-contact,body[data-page="schedule"] #p-schedule,body[data-page="travel"] #p-travel,body[data-page="faqs"] #p-faqs{display:block}
+body[data-page="home"] #p-home,body[data-page="save-the-date"] #p-save-the-date,body[data-page="contact"] #p-contact,body[data-page="schedule"] #p-schedule,body[data-page="travel"] #p-travel,body[data-page="faqs"] #p-faqs,body[data-page="privacy"] #p-privacy,body[data-page="terms"] #p-terms{display:block}
 
 /* paper: every message in the site sits on a sheet of paper over the block print */
 .paper{position:relative;width:100%;max-width:640px;margin-inline:auto;background:var(--paper);border:1px solid rgba(201,112,15,.55);box-shadow:0 1px 2px rgba(0,0,0,.06),0 24px 44px -24px rgba(60,40,50,.55);text-align:center;padding:clamp(30px,6vw,56px) clamp(20px,5vw,48px)}
@@ -126,6 +126,21 @@ body[data-page="home"] .site-foot{display:none}
 #p-save-the-date iframe{display:block;width:100%;height:100svh;border:0;background:#F5EBD8}
 html.lock-outer,html.lock-outer body{overflow:hidden}
 body[data-page="save-the-date"] .site-foot{display:none}
+
+/* ---------- LEGAL PAGES ---------- */
+.legal{max-width:760px;text-align:left}
+.legal .l-title{text-align:center}
+#p-privacy .l-title,#p-terms .l-title{font-family:var(--pinyon);font-size:clamp(46px,9.4vw,72px);line-height:1.15;margin-block:10px 6px}
+.legal .updated{display:block;text-align:center;margin-bottom:26px;font-size:13px;color:var(--grape-soft)}
+.legal h3{margin:30px 0 8px;font-family:var(--ivy);font-weight:400;font-size:14px;letter-spacing:.16em;text-transform:uppercase;color:var(--marigold)}
+.legal p,.legal li{margin:0 0 12px;font-size:15px;line-height:1.7}
+.legal ul{margin:0 0 12px;padding-left:22px}
+.legal a{color:var(--marigold)}
+.legal-links{margin:0;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;font-family:var(--ivy);font-size:12px;letter-spacing:.16em;text-transform:uppercase}
+.legal-links a{color:var(--grape);text-decoration:none;border-bottom:1px solid rgba(201,112,15,.55);padding-bottom:1px}
+.legal-links a:hover{color:var(--marigold)}
+.consent{margin:0;font-size:13px;line-height:1.6;color:var(--grape-soft)}
+.consent a{color:var(--marigold)}
 
 /* ---------- CONTACT / SCHEDULE ---------- */
 .wrap{padding:clamp(28px,6vw,64px) clamp(16px,4vw,32px) clamp(48px,8vw,90px)}
@@ -246,6 +261,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
             <input type="email" id="rsvp-plusone-email" name="plusone_email" placeholder="plusone@example.com" autocomplete="off">
           </div>
           <div class="hp" aria-hidden="true"><label>Leave this empty<input type="text" name="website" tabindex="-1" autocomplete="off"></label></div>
+          <p class="consent">By sending this form you agree to our <a href="#terms">Terms of Service</a> and <a href="#privacy">Privacy Policy</a>, and you confirm you have your plus one's permission to share their details.</p>
           <button type="submit" class="submit" id="rsvp-send">Send</button>
           <p class="form-error" id="form-error" role="alert" hidden>Sorry, that didn't go through. Please try again, or write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a>.</p>
           <p class="form-note" id="form-note">Preview: answers aren't saved yet. On the live site they go straight to our guest list.</p>
@@ -259,6 +275,99 @@ input::placeholder{color:rgba(84,53,85,.45)}
     </div>
   </section>
 
+  <!-- PRIVACY POLICY -->
+  <section class="page" id="p-privacy" aria-label="Privacy Policy">
+    <div class="wrap">
+      <article class="paper legal">
+        <span class="label" style="display:block;text-align:center">Legal</span>
+        <h2 class="l-title">Privacy Policy</h2>
+        <span class="updated">Last updated September 20, 2026</span>
+        <p>This is the private wedding website of Isha Kenkare and Jonathan Rotbard. It is for our invited guests. This page explains, in plain English, what information we collect through the site, what we do with it, and the choices you have.</p>
+
+        <h3>What we collect</h3>
+        <p>Only what you type into the Contact Information form:</p>
+        <ul>
+          <li>your name and mailing address (street, city, state and ZIP code);</li>
+          <li>your phone number and email address, if you enter them;</li>
+          <li>your plus one's name, phone number and email address, if you enter them;</li>
+          <li>which version of the invitation link you used (for example "Both days"), and the date and time you sent the form.</li>
+        </ul>
+        <p>We do not ask for payment details, government ID numbers, or anything else, and please do not enter them.</p>
+
+        <h3>What the site collects automatically</h3>
+        <p>The site does not use cookies, advertising trackers or analytics. Like any website, our hosting provider (Netlify) and Google (which supplies some of our fonts) can see technical details such as your IP address and browser type when your browser loads a page. We do not use these details ourselves.</p>
+
+        <h3>How we use your information</h3>
+        <p>To mail you our save-the-date and formal invitation, to contact you about the wedding (updates, logistics and thank-you notes), and to plan the event. We do not sell your information, we do not use it for marketing, and we do not share it with advertisers.</p>
+
+        <h3>Where it is stored and who can see it</h3>
+        <p>Each submission is added to a private Google Sheet that only the two of us can open. It passes through Google's servers on the way. If we share part of it with someone who is helping us with the wedding, such as a printer or mailing service for the invitations, we share only what they need for that job.</p>
+
+        <h3>Your plus one</h3>
+        <p>If you give us a plus one's details, you are telling us they agree to it. We use those details only to contact them about the wedding.</p>
+
+        <h3>How long we keep it</h3>
+        <p>We keep your information through the wedding and while we send thank-you notes, then delete it within six months after the wedding (by January 31, 2028).</p>
+
+        <h3>Your choices</h3>
+        <p>You can ask us to show you what we have, correct it, or delete it at any time by writing to <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a>. We will reply within 30 days. If you delete your details, we may not be able to send you an invitation.</p>
+
+        <h3>Children</h3>
+        <p>This site is not meant for children under 13 to use. If you list a child's name or details for a family invitation, please do so on their behalf.</p>
+
+        <h3>Security</h3>
+        <p>The site uses an encrypted connection, and the sheet is private. No system is perfectly secure, so please share only what you are comfortable with.</p>
+
+        <h3>Changes</h3>
+        <p>If we change this policy, we will update the date at the top of this page.</p>
+
+        <h3>Questions</h3>
+        <p>Write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a>. You can also read our <a href="#terms">Terms of Service</a>.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- TERMS OF SERVICE -->
+  <section class="page" id="p-terms" aria-label="Terms of Service">
+    <div class="wrap">
+      <article class="paper legal">
+        <span class="label" style="display:block;text-align:center">Legal</span>
+        <h2 class="l-title">Terms of Service</h2>
+        <span class="updated">Last updated September 20, 2026</span>
+        <p>Welcome to the private wedding website of Isha Kenkare and Jonathan Rotbard. By using it, you agree to these terms. If you do not agree, please do not use the site.</p>
+
+        <h3>Who the site is for</h3>
+        <p>The site is for guests we have invited. Your link or password is for you and the people on your invitation. Please do not post it publicly or pass it on to others. We may change or remove access at any time.</p>
+
+        <h3>How you may use it</h3>
+        <ul>
+          <li>Use the site only to see our wedding information and to send us your contact details.</li>
+          <li>Give us accurate information, and only details about other people (such as a plus one) that you have their permission to share.</li>
+          <li>Do not try to break, overload or misuse the site or its forms, and do not send spam, harmful code, or anything unlawful or offensive.</li>
+          <li>Do not copy, scrape or repost the site's design, photos or text without asking us first.</li>
+        </ul>
+
+        <h3>Your information</h3>
+        <p>What you send through the form is handled as described in our <a href="#privacy">Privacy Policy</a>.</p>
+
+        <h3>Details may change</h3>
+        <p>Dates, times and other details on the site may change as we finalize plans. Your formal invitation is the final word. Parts of the site say "coming soon" because we are still building them.</p>
+
+        <h3>Third-party services</h3>
+        <p>Some features rely on services we do not run, such as Google Calendar, Google Sheets and our hosting provider. We are not responsible for how those services work or how they treat your information under their own terms.</p>
+
+        <h3>No guarantees</h3>
+        <p>We provide the site "as is." We do our best to keep it working, but we cannot promise it will always be available or free of errors. To the fullest extent the law allows, we are not liable for any loss that comes from using the site or from being unable to use it.</p>
+
+        <h3>Changes</h3>
+        <p>We may update these terms from time to time. The date at the top shows when they last changed. If you keep using the site after a change, you accept the new terms.</p>
+
+        <h3>Questions</h3>
+        <p>Write to us at <a href="mailto:ishaandjon@gmail.com">ishaandjon@gmail.com</a>.</p>
+      </article>
+    </div>
+  </section>
+
   <!-- SCHEDULE, TRAVEL, FAQS: coming soon -->
   <section class="page" id="p-schedule" aria-label="Schedule"><h2 class="soon">Coming soon</h2></section>
   <section class="page" id="p-travel" aria-label="Travel"><h2 class="soon">Coming soon</h2></section>
@@ -267,14 +376,15 @@ input::placeholder{color:rgba(84,53,85,.45)}
 
 <footer class="site-foot">
   <p class="foot-name">Isha <span class="amp">&amp;</span> Jonathan</p>
+  <p class="legal-links"><a href="#privacy">Privacy Policy</a><span aria-hidden="true">&middot;</span><a href="#terms">Terms of Service</a></p>
 </footer>
 
 <script>
 (function(){
   var html = document.documentElement, body = document.body;
   var nav = document.getElementById('nav'), frame = document.getElementById('std-frame');
-  var PAGES = ['home', 'save-the-date', 'schedule', 'travel', 'contact', 'faqs'];
-  var TITLES = {home: 'Isha & Jonathan', 'save-the-date': 'Save the Date | Isha & Jonathan', schedule: 'Schedule | Isha & Jonathan', travel: 'Travel | Isha & Jonathan', contact: 'Contact Information | Isha & Jonathan', faqs: 'FAQs | Isha & Jonathan'};
+  var PAGES = ['home', 'save-the-date', 'schedule', 'travel', 'contact', 'faqs', 'privacy', 'terms'];
+  var TITLES = {home: 'Isha & Jonathan', 'save-the-date': 'Save the Date | Isha & Jonathan', schedule: 'Schedule | Isha & Jonathan', travel: 'Travel | Isha & Jonathan', contact: 'Contact Information | Isha & Jonathan', faqs: 'FAQs | Isha & Jonathan', privacy: 'Privacy Policy | Isha & Jonathan', terms: 'Terms of Service | Isha & Jonathan'};
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
 
   /* sidebar: opened and closed by the round menu button on every page; choosing a tab, clicking outside it or pressing Escape also closes it */
