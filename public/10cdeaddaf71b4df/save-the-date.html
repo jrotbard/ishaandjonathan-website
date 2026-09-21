@@ -112,8 +112,9 @@ body.opening .after{opacity:1;visibility:visible;transform:none;transition:opaci
 .after .venue::before{content:"";position:absolute;inset:calc(-1 * var(--lb));border:var(--lb) solid transparent;border-image:url(../img/lace-border.svg) 60 round;pointer-events:none;z-index:-1}
 .after .venue img{display:block;width:100%;height:auto;aspect-ratio:3 / 2;object-fit:cover;object-position:50% 50%}
 .after .formal{margin-top:12px;font-family:var(--text);font-style:italic;font-size:clamp(14px,3.8vw,18px);color:var(--marigold)}
-.cue{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:6px;background:none;border:0;cursor:pointer;color:var(--grape)}
-.cue i{font-style:normal;font-size:18px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
+.cue{margin-top:22px;display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 26px 8px;background:var(--rose);border:0;border-radius:999px;box-shadow:0 0 0 2px var(--paper),0 4px 16px -4px rgba(30,14,32,.45);cursor:pointer;color:var(--plum)}
+.cue .label{font-family:var(--ivy);font-size:14px;line-height:1.5;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;color:var(--plum)}
+.cue i{font-style:normal;font-size:20px;line-height:1;animation:nudge 1.8s ease-in-out infinite}
 /* same "Scroll" cue, pinned to the bottom of the screen once the envelope has opened; fades out as soon as the guest scrolls */
 .scroll-hint{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));z-index:35;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:3px;padding:10px 26px 8px;background:var(--rose);border:0;border-radius:999px;box-shadow:0 0 0 2px var(--paper),0 4px 16px -4px rgba(30,14,32,.45);cursor:pointer;color:var(--plum);opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .scroll-hint .label{font-family:var(--ivy);font-size:14px;line-height:1.5;letter-spacing:.14em;padding-left:.14em;text-transform:uppercase;color:var(--plum)}
