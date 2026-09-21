@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" id="theme-color" content="#AED0E7">   <!-- iPhone Safari tints its status bar and toolbar with this; JS sets it per page (sky blue on Home, cream elsewhere) -->
+<meta name="theme-color" id="theme-color" content="#AFD0E6">   <!-- iPhone Safari tints its status bar and toolbar with this; JS sets it per page (sky blue on Home, cream elsewhere) -->
 <title>Isha &amp; Jonathan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,8 +55,8 @@ a{color:inherit}
 .nav.open .tabs a:nth-child(4){transition-delay:.6s,.6s,0s}
 .tabs a:hover{border-bottom-color:rgba(59,33,64,.4)}
 .tabs a[aria-current="page"]{border-bottom-color:var(--plum)}
-.scrim{position:fixed;inset:0;z-index:55;background:rgba(30,14,32,.28);opacity:0;pointer-events:none;transition:opacity .6s}
-.scrim.open{opacity:1;pointer-events:auto}
+.scrim{position:fixed;inset:0;z-index:55;background:rgba(30,14,32,.28);opacity:0;pointer-events:none;visibility:hidden;transition:opacity .6s,visibility 0s .6s}   /* visibility:hidden while closed: iOS 26 Safari reads the background color of fixed elements at the screen edges for its bar tint, even at opacity 0, and was tinting the bars from this */
+.scrim.open{opacity:1;pointer-events:auto;visibility:visible;transition:opacity .6s,visibility 0s}
 /* menu button: white round bubble with three lines, on every page; it turns into an X while the sidebar is open */
 .menu-btn{position:fixed;top:max(clamp(12px,2vw,22px),env(safe-area-inset-top));right:max(clamp(12px,2vw,22px),env(safe-area-inset-right));z-index:70;width:48px;height:48px;padding:0;display:grid;place-items:center;border:0;border-radius:50%;background:var(--rose);color:var(--plum);cursor:pointer;box-shadow:0 0 0 2px var(--paper),0 4px 16px -4px rgba(30,14,32,.45)}
 .menu-btn:hover{color:#2A142C}
@@ -84,7 +84,12 @@ body:is([data-page="schedule"],[data-page="travel"],[data-page="faqs"]) .site-fo
 
 /* ---------- HOME ---------- */
 .hero{position:fixed;inset:0;height:auto;overflow:hidden;background:var(--grape)}   /* fixed to the whole screen, so the photo always reaches the top and bottom edges on phones (100svh stopped short of Safari's bars) */
-html:has(body[data-page="home"]){background:linear-gradient(#AED0E7 0,#AED0E7 50%,#B3ACA0 50%);overscroll-behavior:none}   /* sky above, stone below: the colors iPhone Safari samples for its bars */
+html:has(body[data-page="home"]){background-color:#A59E93;overscroll-behavior:none}   /* plain color (not a gradient): Safari 26 only reads plain colors; this is the photo's stone at the bottom */
+/* iPhone bar tint (Home only): thin fixed strips carrying the photo's top and bottom edge colors. Safari 26 reads their background-color for the status bar and toolbar; older iPhones use the theme-color tag. Nearly invisible on the photo itself. */
+.edge{display:none;position:fixed;left:0;right:0;height:14px;opacity:.14;pointer-events:none;z-index:90}
+.edge-top{top:0;background-color:#AFD0E6}
+.edge-bottom{bottom:0;background-color:#A59E93}
+body[data-page="home"] .edge{display:block}
 body[data-page="home"]{overflow:hidden;background:none}
 .hero-photo{position:absolute;inset:0;margin:0}
 .hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:20% 100%}  /* keep the couple (lower left of the photo) in frame */
@@ -151,6 +156,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
 
 <button type="button" class="menu-btn" id="menu-btn" aria-label="Open menu" aria-controls="nav" aria-expanded="false"><i aria-hidden="true"></i></button>
 <div class="scrim" id="scrim"></div>
+<div class="edge edge-top" aria-hidden="true"></div><div class="edge edge-bottom" aria-hidden="true"></div>
 <header class="nav" id="nav">
   <nav class="tabs" aria-label="Site">
     <a href="#home" data-tab="home">Home</a>
@@ -263,7 +269,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     if (PAGES.indexOf(h) < 0) h = 'home';
     body.dataset.page = h;
     document.title = TITLES[h];
-    document.getElementById('theme-color').setAttribute('content', h === 'home' ? '#AED0E7' : '#F5EBD8');
+    document.getElementById('theme-color').setAttribute('content', h === 'home' ? '#AFD0E6' : '#F5EBD8');
     document.querySelectorAll('.tabs a').forEach(function(a){
       if (a.dataset.tab === h) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
