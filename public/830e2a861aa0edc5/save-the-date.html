@@ -270,7 +270,7 @@ body.petals-on .petals{display:block}
       <div class="unit"><span class="num" id="cd-mins">00</span><span class="label">Minutes</span></div>
       <div class="unit"><span class="num" id="cd-secs">00</span><span class="label">Seconds</span></div>
     </div>
-    <button type="button" class="details-btn" id="open-details">Add your contact info</button>
+    <button type="button" class="details-btn" id="open-details">Share your details for the invitation</button>
   </section>
 
   <!-- Closing -->
@@ -454,7 +454,7 @@ body.petals-on .petals{display:block}
     }).catch(function(){ document.getElementById('cal-note').hidden = false; });
   });
 
-  /* ---- "Add your contact info" opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
+  /* ---- the "Share your details for the invitation" button opens the Contact Information tab of the site (or index.html when this page is opened on its own) ---- */
   document.getElementById('open-details').addEventListener('click', function(){
     try { if (window.parent && window.parent !== window) { window.parent.location.hash = '#contact'; return; } } catch (err) {}
     window.location.href = 'index.html#contact';
