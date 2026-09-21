@@ -75,12 +75,12 @@ main::after{inset:8px;border:1.5px solid #D9892A;border-image:linear-gradient(13
 .pocket{position:absolute;inset:0;z-index:2;pointer-events:none}
 .letter,.frame{position:absolute;opacity:0;transition:transform 1.8s cubic-bezier(.2,.8,.2,1),opacity .3s}
 .letter{left:31cqw;width:53cqw;top:-54cqw;height:84cqw;z-index:1;--r:2.2deg;background:#FFFBF5 url(img/card-texture.svg) 0 0/34cqw 42.5cqw;box-shadow:0 1px 2px rgba(0,0,0,.08),0 16px 30px -14px rgba(60,40,50,.5);
-  padding:6cqw 2.5cqw 0 10cqw;text-align:center;color:var(--grape);transform-origin:50% 100%;transform:translateY(44cqw) rotate(var(--r));transition-delay:.9s}
+  padding:3cqw 2cqw 31cqw 10cqw;display:flex;flex-direction:column;justify-content:center;text-align:center;color:var(--grape);   /* bottom padding = the part of the card hidden inside the envelope, so the text is centered in what shows */transform-origin:50% 100%;transform:translateY(44cqw) rotate(var(--r));transition-delay:.9s}
 .letter::before{content:"";position:absolute;inset:-6.5cqw;border:6.5cqw solid transparent;border-image:url(img/lace-border.svg) 60 round;pointer-events:none;z-index:-1}
-.letter .hello{display:block;font-family:var(--script);font-size:7cqw;line-height:1.12;color:var(--marigold)}
-.letter .n{display:block;font-family:var(--script);font-size:9.6cqw;line-height:1;margin-top:1.4cqw}
-.letter .n2{margin-top:-.4cqw}
-.letter .amp{display:block;font-family:var(--didone);font-style:italic;font-size:5.6cqw;line-height:1;color:var(--marigold);margin-top:.8cqw}
+.letter .hello{display:block;font-family:var(--script);font-size:7.6cqw;line-height:1.12;color:var(--marigold)}
+.letter .n{display:block;font-family:var(--script);font-size:9.8cqw;line-height:1;margin-top:3.2cqw}
+.letter .n2{margin-top:.4cqw}
+.letter .amp{display:block;font-family:var(--didone);font-style:italic;font-size:6.2cqw;line-height:1;color:var(--marigold);margin-top:1.6cqw}
 .frame{left:0cqw;width:47.5cqw;aspect-ratio:100 / 125;top:-46cqw;z-index:2;--r:-3deg;transform-origin:50% 100%;transform:translateY(42cqw) rotate(var(--r));transition-delay:1.3s}
 .frame .ph{position:absolute;left:12.6%;top:9%;width:74.8%;height:78%;border-radius:50%;object-fit:cover;object-position:50% 22%;background:var(--blush-deep)}
 .frame .ring{position:absolute;left:-14%;top:-9.6%;width:114%;height:112.8%;pointer-events:none}
