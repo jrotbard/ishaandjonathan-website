@@ -23,7 +23,8 @@ SALT = 'ishaandjonathan|'          # must match SALT in src/gate.html
 VERSIONS = {'both': 'July 9 & 10', 'one': 'July 10 only', 'may': 'May 14'}
 NOINDEX = '<meta name="robots" content="noindex, nofollow">\n'
 MARKER = '<meta name="invite-site" content="1">\n'   # the password page looks for this to confirm a folder is real
-ASSET = re.compile(r'(?<![\w/.\-])(img|fonts|audio|cal)/(?=[\w.\-])')   # shared assets live one level up from a version folder
+# Shared assets live one level up from a version folder. Only real file paths are rewritten (they end in .ext), so MIME types such as type="audio/wav" are left alone.
+ASSET = re.compile(r'(?<![\w/.\-])(img|fonts|audio|cal)/(?=[\w\-]+\.[A-Za-z0-9]{2,5}\b)')
 
 
 def slug(password):
