@@ -93,6 +93,19 @@ html:has(body[data-page="home"]){background-color:#A59E93;overscroll-behavior:no
 .edge-top{top:0;background-color:#AFD0E6}
 .edge-bottom{bottom:0;background-color:#A59E93}
 body[data-page="home"] .edge{display:block}
+
+/* PHONES AND TABLETS (touch screens): the photo page is taller than the screen so real photo pixels exist behind Safari's status bar and toolbar, which iOS 26 shows the page through. The page is scrolled down by --bleed-top on load and snaps back to that spot, so what fills the screen is the same picture as before. Above: the photo itself, a little larger. Below: the photo's bottom edge carried on smoothly as stone (the couple stands too close to the bottom to enlarge the photo downward). */
+:root{--bleed-top:72px;--bleed-bottom:150px}
+.hero-ext,.hero-snap{display:none}
+@media (hover:none) and (pointer:coarse){
+  html:has(body[data-page="home"]){overflow-y:scroll;scroll-snap-type:y mandatory}
+  body[data-page="home"]{overflow:visible}
+  .hero{position:relative;inset:auto;height:calc(100svh + var(--bleed-top) + var(--bleed-bottom))}
+  .hero-photo{inset:auto;top:0;left:0;right:0;height:calc(100svh + var(--bleed-top))}
+  .hero-ext{display:block;position:absolute;left:0;right:0;top:calc(100svh + var(--bleed-top));height:var(--bleed-bottom);background:linear-gradient(to right,#B0AEA5,#B9B6AB 12.5%,#BAB5A9 25%,#C0BBB0 37.5%,#B0A99D 50%,#B1A99D 62.5%,#A9A195 75%,#A09A94 87.5%,#C0B8A9)}
+  .hero-snap{display:block;position:absolute;left:0;top:var(--bleed-top);width:1px;height:100svh;scroll-snap-align:start;visibility:hidden}
+  .hero-names{bottom:calc(var(--bleed-bottom) + max(23.5vw,.315 * (100svh + var(--bleed-top))) + 24px)}
+}
 body[data-page="home"]{overflow:hidden;background:none}
 .hero-photo{position:absolute;inset:0;margin:0}
 .hero-photo img{display:block;width:100%;height:100%;object-fit:cover;object-position:20% 100%}  /* keep the couple (lower left of the photo) in frame */
@@ -177,6 +190,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     <!-- cover photo: ../img/cover.webp (Real-ESRGAN 4x upscale of the original 1026x766 photo) -->
     <div class="hero" id="hero">
       <figure class="hero-photo"><img src="../img/cover.webp" alt="Isha and Jonathan on a stone lookout above a bay, with the ocean and a green headland behind them" width="3072" height="2294"></figure>
+      <div class="hero-ext" aria-hidden="true"></div><div class="hero-snap" aria-hidden="true"></div>
       <h1 class="hero-names"><span>Isha</span><span><i class="hero-amp">&amp;</i> Jonathan</span></h1>
     </div>
   </section>
@@ -266,6 +280,12 @@ input::placeholder{color:rgba(84,53,85,.45)}
     nav.classList.toggle('open', v); scrim.classList.toggle('open', v);
     menuBtn.setAttribute('aria-expanded', String(v)); menuBtn.setAttribute('aria-label', v ? 'Close menu' : 'Open menu');
   }
+  /* touch screens: Home is scrolled down by the photo's top bleed so the extra photo sits above the screen, behind Safari's status bar */
+  var touch = window.matchMedia('(hover: none) and (pointer: coarse)');
+  function homeOffset(){ return touch.matches && body.dataset.page === 'home' ? (parseFloat(getComputedStyle(html).getPropertyValue('--bleed-top')) || 0) : 0; }
+  window.addEventListener('load', function(){ window.scrollTo(0, homeOffset()); });
+  window.addEventListener('pageshow', function(){ window.scrollTo(0, homeOffset()); });
+  window.addEventListener('orientationchange', function(){ setTimeout(function(){ window.scrollTo(0, homeOffset()); }, 300); });
   function route(){
     var h = (location.hash || '#home').slice(1);
     if (h === 'rsvp') h = 'contact';  /* old link */
@@ -276,7 +296,7 @@ input::placeholder{color:rgba(84,53,85,.45)}
     document.querySelectorAll('.tabs a').forEach(function(a){
       if (a.dataset.tab === h) a.setAttribute('aria-current', 'page'); else a.removeAttribute('aria-current');
     });
-    window.scrollTo(0, 0);
+    window.scrollTo(0, homeOffset());
     setOpen(false);
     html.classList.toggle('lock-outer', h === 'save-the-date');
     /* the save the date loads fresh on every visit (closed envelope) and is unloaded on leaving, which also stops its music */
