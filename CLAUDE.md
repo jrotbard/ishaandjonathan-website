@@ -4,7 +4,7 @@ Static site behind a password page. No server, no framework; one small Python bu
 
 ## Layout
 - `src/` = **the source. Edit these.** `site.html` (the four-tab shell, Home/Save the Date/Contact/etc.), `save-the-date.html` (envelope page, shown in an iframe on the Save the Date tab), `gate.html` (password page).
-- `public/` = **what gets published** (`netlify.toml` sets `publish = "public"`). Holds the shared assets (`img/`, `fonts/`, `audio/`, `cal/`), the password page (`index.html`), `robots.txt`, and two generated folders with 16-character hex names, one per version. **Never edit the generated files by hand.**
+- `public/` = **what gets published** (Cloudflare Pages output directory = `public`; `netlify.toml` is legacy). Holds the shared assets (`img/`, `fonts/`, `audio/`, `cal/`), the password page (`index.html`), `robots.txt`, `_headers` (noindex header for Cloudflare Pages, written by `build.py`), and generated folders with 16-character hex names, one per version. **Never edit the generated files by hand.**
 - `build.py` generates `public/index.html` and the two version folders from `src/`. Run `python3 build.py` after every change in `src/`, then commit `src/` and `public/` together.
 - `slugs.json` = the two hashed folder names (not the passwords). Passwords are never stored anywhere.
 
@@ -18,8 +18,8 @@ Static site behind a password page. No server, no framework; one small Python bu
 
 ## Rules
 - GitHub is the source of truth: `git pull --rebase` before starting, and **commit and push every change right after making it**, in the same turn, without asking (`git add -A && git commit -m "<what changed>" && git push`). Check `git status` first since another session may be editing; never force-push.
-- Repo: https://github.com/jrotbard/ishaandjonathan-website (private, branch `main`). Live domain: ishaandjonathan.com (Spaceship domain, hosted on Netlify).
-- The live Netlify site is not yet linked to GitHub (it was uploaded by hand), so pushes do not go live on their own. Once linked (Netlify: Site configuration, Build and deploy, Link repository), every push to `main` publishes.
+- Repo: https://github.com/jrotbard/ishaandjonathan-website (private, branch `main`). Live domain: ishaandjonathan.com (Spaceship domain). Hosting is moving from Netlify to Cloudflare Pages (free, no per-deploy credits) after Netlify's free credits ran out on 2026-09-27; Pages is connected to this repo with no build command and output directory `public`.
+- Every push to `main` triggers a deploy on the host, so batch changes and push deliberately; do not push every few seconds (this is what used up the Netlify credits, 59 commits on 2026-09-20).
 - Fonts in `public/fonts/` are demo builds (Kaelyna Script, Billa Mount); buy the full licenses (and Ivy Mode) before guests get the link.
 - Use `agent-browser --session <name>` for previews so you do not hijack another session's browser. To preview locally: `cd public && python3 -m http.server 8000`.
-- Safety net: a background job (`~/Library/LaunchAgents/com.jonathan.wedding-site-sync.plist`, script `~/.claude/tools/wedding-site-sync/sync.sh`, log `~/Library/Logs/wedding-site-sync.log`) commits and pushes any uncommitted change within about a minute. It does not replace committing with a real message right after a change.
+- The auto-sync launchd job (`com.jonathan.wedding-site-sync`) was turned off on 2026-09-27 because a push every 60s meant a deploy every 60s. Plist and script are still on disk; re-enable only with a much longer interval.

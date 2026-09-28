@@ -70,6 +70,7 @@ def main():
 
     (PUB / 'index.html').write_text(with_head((SRC / 'gate.html').read_text(), NOINDEX))
     (PUB / 'robots.txt').write_text('User-agent: *\nDisallow: /\n')
+    (PUB / '_headers').write_text('/*\n  X-Robots-Tag: noindex, nofollow\n')   # Cloudflare Pages (Netlify used netlify.toml)
     print('password page -> public/index.html')
 
 
