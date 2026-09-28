@@ -1,0 +1,6 @@
+{
+  // Cloudflare Workers static assets: serves public/ as-is (no Worker code). _headers in public/ adds the noindex header.
+  "name": "ishaandjonathan",
+  "compatibility_date": "2026-09-26",
+  "assets": { "directory": "./public" }
+}
